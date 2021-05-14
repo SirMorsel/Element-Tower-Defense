@@ -72,6 +72,11 @@ public class EnemyStats : MonoBehaviour
         {
             health -= CalcDamage(damage, false);
         }
+
+        if (health <= 0)
+        {
+            isDead = true;
+        }
     }
 
     public void SetDamageToPlayer()
