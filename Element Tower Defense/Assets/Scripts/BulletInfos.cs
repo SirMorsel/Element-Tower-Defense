@@ -59,6 +59,6 @@ public class BulletInfos : MonoBehaviour
 
     public void SetBulletDamage(int towerLv)
     {
-        damage *= towerLv;
+        damage = damage * towerLv;
     }
 }

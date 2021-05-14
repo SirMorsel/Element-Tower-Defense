@@ -14,9 +14,6 @@ public class EnemyStats : MonoBehaviour
         // Set monster element
         monsterElement = (Elements)Random.Range(0, 4);
         SetMonsterElement(monsterElement);
-        //Renderer monsterRenderer = this.GetComponent<Renderer>();
-        //monsterRenderer.material.SetColor("_Color", Color.red);
-
     }
 
     // Update is called once per frame
