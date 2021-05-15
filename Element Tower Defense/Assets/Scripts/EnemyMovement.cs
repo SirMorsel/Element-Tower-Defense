@@ -33,6 +33,22 @@ public class EnemyMovement : MonoBehaviour
                 waypointID++;
                 target = Waypoints.GetWaypoints()[waypointID];
             }
+            else
+            {
+               // print("Town has reached! -1 health for player");
+               // Destroy(this.gameObject);
+            }
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+
+            other.GetComponent<PlayerStats>().TakeDamage();
+            Destroy(this.gameObject);
+        }
+    }
+
 }

@@ -98,7 +98,7 @@ public class EnemyStats : MonoBehaviour
         switch (elementType)
         {
             case Elements.NEUTRAL:
-                print("Case Electro");
+                print("Case Neutral");
                 this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
                 break;
             case Elements.ELECTRO:
