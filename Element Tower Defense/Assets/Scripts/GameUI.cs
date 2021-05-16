@@ -8,14 +8,19 @@ public class GameUI : MonoBehaviour
     private GameObject player;
     public Text PlayerHealthText;
     public Text PlayerCurrencyText;
+    public Text WaveNumberText;
+    public Text ScoreText;
 
-    public bool GameIsOver;
+    public GameObject GameOverUIPanel;
+
+    private bool GameIsOver;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         GameIsOver = false;
+        GameOverUIPanel.SetActive(GameIsOver);
     }
 
     // Update is called once per frame
@@ -30,6 +35,7 @@ public class GameUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        WaveNumberText.text = $"Wave {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
         PlayerHealthText.text = $"Health: " +
             $"{player.GetComponent<PlayerStats>().GetCurrentHealth()}/" +
             $"{player.GetComponent<PlayerStats>().GetMaxHealth()}";
@@ -39,6 +45,7 @@ public class GameUI : MonoBehaviour
     public void GameOver()
     {
         GameIsOver = true;
-        print("Game over!");
+        GameOverUIPanel.SetActive(GameIsOver);
+        ScoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
     }
 }

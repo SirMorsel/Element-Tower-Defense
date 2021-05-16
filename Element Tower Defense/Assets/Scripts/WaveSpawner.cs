@@ -6,7 +6,7 @@ public class WaveSpawner : MonoBehaviour
 {
     public Transform enemyPrefab;
     public Transform enemySpawnPoint;
-    private int waveID = 1;
+    private int currentWaveNumber = 1;
     private int difficultyMultiplyer = 2;
     private float waitTime = 0.5f;
     // Start is called before the first frame update
@@ -28,16 +28,21 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
-        for (int i = 0; i < waveID + (waveID * difficultyMultiplyer); i++)
+        currentWaveNumber++;
+        for (int i = 0; i < currentWaveNumber + (currentWaveNumber * difficultyMultiplyer); i++)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(waitTime);
         }
-        waveID++;
     }
 
     private void SpawnEnemy()
     {
         Instantiate(enemyPrefab, enemySpawnPoint.position, enemySpawnPoint.rotation);
+    }
+
+    public int GetWaveNumber()
+    {
+        return currentWaveNumber;
     }
 }
