@@ -9,7 +9,8 @@ public class PlayerStats : MonoBehaviour
     private int health;
     private int currency = 100;
 
-    public Text PlayerHealthText;
+    // UI Elements
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerHealthText.text = $"Health: {health}/{maxHealth}";
+
     }
 
     public int GetCurrentHealth()
