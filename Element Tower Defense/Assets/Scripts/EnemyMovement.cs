@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private float speed = 5f;
+    private float speed = 2.5f;
     private Transform target;
     private int waypointID = 0;
 
@@ -20,8 +20,13 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate((target.position - transform.position).normalized * speed * Time.deltaTime);
+        MoveToWaypoint();
         SetNewWaypointTarget();
+    }
+
+    private void MoveToWaypoint()
+    {
+        transform.Translate((target.position - transform.position).normalized * speed * Time.deltaTime);
     }
 
     private void SetNewWaypointTarget()
@@ -32,11 +37,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 waypointID++;
                 target = Waypoints.GetWaypoints()[waypointID];
-            }
-            else
-            {
-               // print("Town has reached! -1 health for player");
-               // Destroy(this.gameObject);
+                // Rotate slime to next waypoint
             }
         }
     }

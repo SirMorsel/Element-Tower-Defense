@@ -8,7 +8,7 @@ public class WaveSpawner : MonoBehaviour
     public Transform enemySpawnPoint;
     private int currentWaveNumber = 1;
     private int difficultyMultiplyer = 2;
-    private float waitTime = 0.5f;
+    private float waitTime = 0.75f;
     // Start is called before the first frame update
     void Start()
     {

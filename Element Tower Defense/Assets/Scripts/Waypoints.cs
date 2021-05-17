@@ -12,7 +12,7 @@ public class Waypoints : MonoBehaviour
         waypoints = new Transform[waypointHolder.transform.childCount];
         for (int i = 0; i < waypoints.Length; i++)
         {
-            print($"Point {waypointHolder.transform.GetChild(i).name}");
+            // print($"Point {waypointHolder.transform.GetChild(i).name}");
             waypoints[i] = waypointHolder.transform.GetChild(i);
         }
     }
