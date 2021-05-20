@@ -98,19 +98,15 @@ public class EnemyStats : MonoBehaviour
         switch (elementType)
         {
             case Elements.NEUTRAL:
-                print("Case Neutral");
                 this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
                 break;
             case Elements.ELECTRO:
-                print("Case Electro");
                 this.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
                 break;
             case Elements.FIRE:
-                print("Case Fire");
                 this.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                 break;
             case Elements.WATER:
-                print("Case Water");
                 this.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
                 break;
             default:

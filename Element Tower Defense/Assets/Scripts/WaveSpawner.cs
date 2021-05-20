@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Transform enemyPrefab;
-    public Transform enemySpawnPoint;
+    // [System.Serializable]
+    public Transform EnemyPrefab;
+    public Transform EnemySpawnPoint;
+
     private int currentWaveNumber = 1;
     private int difficultyMultiplyer = 2;
     private float waitTime = 0.75f;
+
+    private List<GameObject> listOfEnemies = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -31,18 +35,29 @@ public class WaveSpawner : MonoBehaviour
         currentWaveNumber++;
         for (int i = 0; i < currentWaveNumber + (currentWaveNumber * difficultyMultiplyer); i++)
         {
-            SpawnEnemy();
+            listOfEnemies.Add(SpawnEnemy());
             yield return new WaitForSeconds(waitTime);
         }
+        // print($"TEST LIST{listOfEnemies[0]}");
     }
 
-    private void SpawnEnemy()
+    private GameObject SpawnEnemy()
     {
-        Instantiate(enemyPrefab, enemySpawnPoint.position, enemySpawnPoint.rotation);
+        return Instantiate(EnemyPrefab, EnemySpawnPoint.position, EnemySpawnPoint.rotation).gameObject;
     }
 
     public int GetWaveNumber()
     {
         return currentWaveNumber;
+    }
+
+    public List<GameObject> GetListOfEnemies()
+    {
+        return listOfEnemies;
+    }
+
+    public void RemoveEnemyFromList(GameObject enemy)
+    {
+        listOfEnemies.Remove(enemy);
     }
 }

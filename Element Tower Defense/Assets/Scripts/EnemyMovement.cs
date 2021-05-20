@@ -8,13 +8,13 @@ public class EnemyMovement : MonoBehaviour
     private Transform target;
     private int waypointID = 0;
 
-
+    private GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager");
         target = Waypoints.GetWaypoints()[0];
-        print($"{this.name} current target is {target.name}");
     }
 
     // Update is called once per frame
@@ -46,8 +46,8 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-
             other.GetComponent<PlayerStats>().TakeDamage();
+            gameManager.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
             Destroy(this.gameObject);
         }
     }
