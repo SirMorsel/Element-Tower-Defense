@@ -28,7 +28,9 @@ public class EnemyStats : MonoBehaviour
         {
             Debug.Log($"Enemy health: {health}");
             // Increase player coins
-            Destroy(this.gameObject);
+
+            // Remove Monster from list
+           // Destroy(this.gameObject);
         }
     }
 
@@ -37,49 +39,43 @@ public class EnemyStats : MonoBehaviour
         return isDead;
     }
 
-    public void TakeDamage(Elements elementType, float damage)
+    public void TakeDamage(Elements bulletElementType, float damage)
     {
-        if (monsterElement == elementType)
+        if (monsterElement == Elements.NEUTRAL)
         {
             print("Normal Damage");
             health -= damage;
-        } else if(monsterElement == elementType)
+        } else if(monsterElement == bulletElementType)
         {
             print("Immune");
-        } else if (monsterElement == Elements.ELECTRO && elementType == Elements.WATER)
-        {
-            health -= CalcDamage(damage, true);
-        } else if (monsterElement == Elements.ELECTRO && elementType == Elements.FIRE)
+        } else if (monsterElement == Elements.ELECTRO && bulletElementType == Elements.WATER)
         {
             health -= CalcDamage(damage, false);
-        }
-        else if (monsterElement == Elements.FIRE && elementType == Elements.ELECTRO)
+        } else if (monsterElement == Elements.ELECTRO && bulletElementType == Elements.FIRE)
         {
             health -= CalcDamage(damage, true);
         }
-        else if (monsterElement == Elements.FIRE && elementType == Elements.WATER)
+        else if (monsterElement == Elements.FIRE && bulletElementType == Elements.ELECTRO)
         {
             health -= CalcDamage(damage, false);
         }
-        else if (monsterElement == Elements.WATER && elementType == Elements.FIRE)
+        else if (monsterElement == Elements.FIRE && bulletElementType == Elements.WATER)
         {
             health -= CalcDamage(damage, true);
         }
-        else if (monsterElement == Elements.WATER && elementType == Elements.ELECTRO)
+        else if (monsterElement == Elements.WATER && bulletElementType == Elements.FIRE)
         {
             health -= CalcDamage(damage, false);
         }
-
+        else if (monsterElement == Elements.WATER && bulletElementType == Elements.ELECTRO)
+        {
+            health -= CalcDamage(damage, true);
+        }
+        // print($"Slime health: {health}");
         if (health <= 0)
         {
             isDead = true;
         }
-    }
-
-    public void SetDamageToPlayer()
-    {
-        // Decrease Player healh
-        Destroy(this.gameObject);
     }
 
     private float CalcDamage(float damage, bool isEffective)
