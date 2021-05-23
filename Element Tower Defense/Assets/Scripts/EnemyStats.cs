@@ -11,9 +11,7 @@ public class EnemyStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set monster element
-        monsterElement = (Elements)Random.Range(0, 4);
-        SetMonsterElement(monsterElement);
+        SetMonsterElement();
     }
 
     // Update is called once per frame
@@ -26,11 +24,9 @@ public class EnemyStats : MonoBehaviour
     {
         if (isDead)
         {
-            Debug.Log($"Enemy health: {health}");
             // Increase player coins
-
-            // Remove Monster from list
-           // Destroy(this.gameObject);
+            GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -89,9 +85,10 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    private void SetMonsterElement(Elements elementType)
+    private void SetMonsterElement()
     {
-        switch (elementType)
+        monsterElement = (Elements)Random.Range(0, 4);
+        switch (monsterElement)
         {
             case Elements.NEUTRAL:
                 this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);

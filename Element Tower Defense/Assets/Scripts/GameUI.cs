@@ -26,7 +26,7 @@ public class GameUI : MonoBehaviour
     {
         
         InitializeUiElements();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = this.GetComponent<PlayerStats>().gameObject;
         gameIsOver = false;
         gameOverUIPanel.SetActive(gameIsOver);
         
@@ -59,7 +59,7 @@ public class GameUI : MonoBehaviour
                     waveNumberText = uiElements.transform.GetChild(3).GetComponent<Text>();
                     break;
                 default:
-                    print("Unkown element found");
+                    print("Unassigned element detected"); // Just for debug
                     break;
             }
         }

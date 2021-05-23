@@ -8,14 +8,12 @@ public class EnemyMovement : MonoBehaviour
     private Transform target;
     private int waypointID = 0;
 
-    private GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
         target = Waypoints.GetWaypoints()[0];
-    }
+    } 
 
     // Update is called once per frame
     void Update()
@@ -38,18 +36,13 @@ public class EnemyMovement : MonoBehaviour
                 waypointID++;
                 target = Waypoints.GetWaypoints()[waypointID];
                 // Rotate slime to next waypoint
+            } else
+            {
+                print("Slime reached town!!!!!!");
+                GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
+                Destroy(this.gameObject);
+                GameManager.Instance.gameObject.GetComponent<PlayerStats>().TakeDamage();
             }
         }
     }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            other.GetComponent<PlayerStats>().TakeDamage();
-            gameManager.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
-            Destroy(this.gameObject);
-        }
-    }
-
 }

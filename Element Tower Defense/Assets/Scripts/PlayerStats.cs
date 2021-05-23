@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour
     // UI Elements
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         health = maxHealth;
 

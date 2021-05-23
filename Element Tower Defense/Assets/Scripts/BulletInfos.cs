@@ -75,6 +75,8 @@ public class BulletInfos : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+
+
     public void SetBulletElementType(Elements elementType)
     {
         bulletElement = elementType;

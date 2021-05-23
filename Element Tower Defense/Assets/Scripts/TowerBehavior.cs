@@ -41,7 +41,8 @@ public class TowerBehavior : MonoBehaviour
     private void SearchForTarget()
     {
         // GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
-        List<GameObject> targets = GameObject.Find("GameManager").GetComponent<WaveSpawner>().GetListOfEnemies();
+        //List<GameObject> targets = GameObject.Find("GameManager").GetComponent<WaveSpawner>().GetListOfEnemies();
+        List<GameObject> targets = GameManager.Instance.gameObject.GetComponent<WaveSpawner>().GetListOfEnemies();
         // print($"Current amount of items in List: {targets.Count}");
         foreach (var target in targets)
         {
