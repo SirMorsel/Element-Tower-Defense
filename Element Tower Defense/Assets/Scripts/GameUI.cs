@@ -12,11 +12,12 @@ public class GameUI : MonoBehaviour
     private Text playerHealthText;
     private Text playerCurrencyText;
     private Text waveNumberText;
+    private Text nextWaveCountdownText;
+    private Button waveSpawnButton;
 
     // Game Over UI Elements
     private GameObject gameOverUIPanel;
     private Text scoreText;
-
 
 
     private bool gameIsOver;
@@ -24,7 +25,6 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         InitializeUiElements();
         player = this.GetComponent<PlayerStats>().gameObject;
         gameIsOver = false;
@@ -53,10 +53,16 @@ public class GameUI : MonoBehaviour
                     playerHealthText = uiElements.transform.GetChild(i).GetComponent<Text>();
                     break;
                 case "PlayerCurrencyAmountText":
-                    playerCurrencyText = uiElements.transform.GetChild(2).GetComponent<Text>();
+                    playerCurrencyText = uiElements.transform.GetChild(i).GetComponent<Text>();
                     break;
                 case "WaveAmountText":
-                    waveNumberText = uiElements.transform.GetChild(3).GetComponent<Text>();
+                    waveNumberText = uiElements.transform.GetChild(i).GetComponent<Text>();
+                    break;
+                case "WaveCountdownText":
+                    nextWaveCountdownText = uiElements.transform.GetChild(i).GetComponent<Text>();
+                    break;
+                case "TriggerWaveButton":
+                    waveSpawnButton = uiElements.transform.GetChild(i).GetComponent<Button>();
                     break;
                 default:
                     print("Unassigned element detected"); // Just for debug
@@ -74,6 +80,7 @@ public class GameUI : MonoBehaviour
             $"{player.GetComponent<PlayerStats>().GetCurrentHealth()}/" +
             $"{player.GetComponent<PlayerStats>().GetMaxHealth()}";
         playerCurrencyText.text = $"Currency: {player.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency()}";
+
     }
 
     public void GameOver()
@@ -81,5 +88,15 @@ public class GameUI : MonoBehaviour
         gameIsOver = true;
         gameOverUIPanel.SetActive(gameIsOver);
         scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
+    }
+
+    public void TimerTextUpdate(float countdown)
+    {
+        nextWaveCountdownText.text = countdown.ToString("F0");
+    }
+
+    public void ChangeWaveSpawnBtnStage(bool state)
+    {
+        waveSpawnButton.interactable = state;
     }
 }
