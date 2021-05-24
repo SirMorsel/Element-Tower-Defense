@@ -8,6 +8,8 @@ public class EnemyStats : MonoBehaviour
     private float health = 100.00F;
     private bool isDead = false;
     private Elements monsterElement = Elements.NEUTRAL;
+
+    private int monsterValue = 25;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,7 @@ public class EnemyStats : MonoBehaviour
         if (isDead)
         {
             // Increase player coins
+            GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurreny(monsterValue);
             GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
             Destroy(this.gameObject);
         }

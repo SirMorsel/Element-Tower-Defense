@@ -24,7 +24,6 @@ public class Foundation : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // show build UI
         if (tower != null)
         {
             // Update tower || sell tower
@@ -33,12 +32,19 @@ public class Foundation : MonoBehaviour
         }
         else
         {
-            // Build tower
-           // GameObject towerToBuild = GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild();
-            tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(), 
-                                            transform.position + new Vector3(0f,1f,0f), transform.rotation);
-            tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
-           
+            if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() < 
+                GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
+            {
+                // Build tower
+                tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
+                                                transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+                tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
+                GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
+            } else
+            {
+                print("Max amount of buildable towers reached!!!");
+            }
+
         }
     }
 

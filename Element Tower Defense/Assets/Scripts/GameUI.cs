@@ -11,6 +11,7 @@ public class GameUI : MonoBehaviour
     private GameObject uiElements;
     private Text playerHealthText;
     private Text playerCurrencyText;
+    private Text amountOfTowersText;
     private Text waveNumberText;
     private Text nextWaveCountdownText;
     private Button waveSpawnButton;
@@ -58,6 +59,9 @@ public class GameUI : MonoBehaviour
                 case "WaveAmountText":
                     waveNumberText = uiElements.transform.GetChild(i).GetComponent<Text>();
                     break;
+                case "AmountOfTowerText":
+                    amountOfTowersText = uiElements.transform.GetChild(i).GetComponent<Text>();
+                    break;
                 case "WaveCountdownText":
                     nextWaveCountdownText = uiElements.transform.GetChild(i).GetComponent<Text>();
                     break;
@@ -80,6 +84,8 @@ public class GameUI : MonoBehaviour
             $"{player.GetComponent<PlayerStats>().GetCurrentHealth()}/" +
             $"{player.GetComponent<PlayerStats>().GetMaxHealth()}";
         playerCurrencyText.text = $"Currency: {player.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency()}";
+        amountOfTowersText.text = $"Amount Towers: {GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers()} /" +
+                                  $"{GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers()}";
 
     }
 
