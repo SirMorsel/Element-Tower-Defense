@@ -41,7 +41,7 @@ public class WaveSpawner : MonoBehaviour
             gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
         }
 
-        print($"-----> List {GetListOfEnemies().Count}");
+        // print($"-----> List {GetListOfEnemies().Count}");
         
     }
 
