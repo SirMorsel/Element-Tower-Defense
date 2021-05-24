@@ -29,6 +29,7 @@ public class WaveSpawner : MonoBehaviour
         if (GetListOfEnemies().Count <= 0)
         {
             gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(true);
+            gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(true);
             if (countdown <= 0)
             {
                 countdown = nextWaveCountdown;
@@ -38,6 +39,7 @@ public class WaveSpawner : MonoBehaviour
             countdown -= Time.deltaTime;
         } else
         {
+            gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(false);
             gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
         }
 

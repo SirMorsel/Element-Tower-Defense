@@ -92,11 +92,23 @@ public class GameUI : MonoBehaviour
 
     public void TimerTextUpdate(float countdown)
     {
-        nextWaveCountdownText.text = countdown.ToString("F0");
+        nextWaveCountdownText.text = "Next wave in: " + countdown.ToString("F0");
+        if (countdown < 10)
+        {
+            nextWaveCountdownText.color = Color.red;
+        } else
+        {
+            nextWaveCountdownText.color = Color.white;
+        }
     }
 
     public void ChangeWaveSpawnBtnStage(bool state)
     {
         waveSpawnButton.interactable = state;
+    }
+
+    public void ChangeCountdownTextStat(bool state)
+    {
+        nextWaveCountdownText.enabled = state;
     }
 }

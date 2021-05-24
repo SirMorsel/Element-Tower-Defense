@@ -1050,8 +1050,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 481, y: -99}
-  m_SizeDelta: {x: 300, y: 60}
+  m_AnchoredPosition: {x: 139.5, y: -101.20001}
+  m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &398422516
 MonoBehaviour:
@@ -1095,13 +1095,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Countdown Placeholder
+  m_Text: 'Next wave in: 00'
 --- !u!222 &398422518
 CanvasRenderer:
   m_ObjectHideFlags: 0
