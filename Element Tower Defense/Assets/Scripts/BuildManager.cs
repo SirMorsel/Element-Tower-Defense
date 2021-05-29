@@ -21,6 +21,7 @@ public class BuildManager : MonoBehaviour
         towerUI = GameObject.Find("TowerUI");
         print($"TEST {towerUI}");
         towerToBuildBackUp = towerToBuild;
+        towerToBuild = null;
     }
 
     // Update is called once per frame
