@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class GameUI : MonoBehaviour
     private GameObject gameOverUIPanel;
     private Text scoreText;
 
+    // Submenu UI Elements
+    private GameObject subMenuUIPanel;
 
     private bool gameIsOver;
 
@@ -30,7 +33,9 @@ public class GameUI : MonoBehaviour
         player = this.GetComponent<PlayerStats>().gameObject;
         gameIsOver = false;
         gameOverUIPanel.SetActive(gameIsOver);
-        
+        subMenuUIPanel.SetActive(false);
+
+
     }
 
     // Update is called once per frame
@@ -74,6 +79,7 @@ public class GameUI : MonoBehaviour
             }
         }
         gameOverUIPanel = GameObject.Find("Canvas/GameOverPanel");
+        subMenuUIPanel = GameObject.Find("Canvas/SubMenuPanel");
         scoreText = gameOverUIPanel.transform.GetChild(1).GetComponent<Text>();
     }
 
@@ -116,5 +122,20 @@ public class GameUI : MonoBehaviour
     public void ChangeCountdownTextStat(bool state)
     {
         nextWaveCountdownText.enabled = state;
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ChangeSubMenuPanelState()
+    {
+        subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
     }
 }
