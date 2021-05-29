@@ -24,27 +24,32 @@ public class Foundation : MonoBehaviour
 
     private void OnMouseDown()
     {
+
         if (tower != null)
         {
             // Update tower || sell tower
             print("TOWER FOUND");
-
+            GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
         }
         else
         {
-            if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() < 
-                GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
+            if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild() != null)
             {
-                // Build tower
-                tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
-                                                transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
-                tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
-                GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
-            } else
-            {
-                print("Max amount of buildable towers reached!!!");
+                //GameManager.Instance.GetComponent
+                if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() <
+                    GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
+                {
+                    // Build tower
+                    tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
+                                                    transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+                    tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
+                    GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
+                }
+                else
+                {
+                    print("Max amount of buildable towers reached!!!");
+                }
             }
-
         }
     }
 

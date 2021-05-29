@@ -5,7 +5,11 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     public GameObject towerToBuild;
+    private GameObject towerToBuildBackUp;
     private Elements towerToBuildElement = Elements.WATER;
+    private Foundation selectedTower;
+
+    private GameObject towerUI;
 
     private int maxAmountOfTowers = 13;
     private int amountOfPlayerTowers = 0;
@@ -13,7 +17,9 @@ public class BuildManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        towerUI = GameObject.Find("TowerUI");
+        print($"TEST {towerUI}");
+        towerToBuildBackUp = towerToBuild;
     }
 
     // Update is called once per frame
@@ -28,9 +34,36 @@ public class BuildManager : MonoBehaviour
         return towerToBuild;
     }
 
+    public void SelectTower(Foundation foundation)
+    {
+        if (selectedTower == foundation)
+        {
+            DeselectTower();
+        }
+        else
+        {
+            selectedTower = foundation;
+            towerToBuild = null;
+            towerUI.GetComponent<TowerUI>().SetTarget(foundation);
+        }
+
+    }
+
+    public void DeselectTower()
+    {
+        selectedTower = null;
+        towerToBuild = towerToBuildBackUp; // refactor
+        towerUI.GetComponent<TowerUI>().HideUiElement();
+
+    }
+
     public void SetTowerToBuild(Elements towerType)
     {
+        DeselectTower();
+        //towerToBuild = towerToBuildBackUp;
         towerToBuildElement = towerType;
+        //selectedTower = null;
+        //towerUI.GetComponent<TowerUI>().HideUiElement();
     }
 
     public Elements GetTowerToBuildElement()
