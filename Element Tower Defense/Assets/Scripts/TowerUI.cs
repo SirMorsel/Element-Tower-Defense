@@ -37,7 +37,7 @@ public class TowerUI : MonoBehaviour
     public void SetTarget(Foundation target)
     {
         this.target = target;
-        transform.position = target.transform.position;
+        transform.position = target.transform.position + new Vector3(0, 2.4f,0);
         ui.SetActive(true);
     }
 
@@ -49,7 +49,7 @@ public class TowerUI : MonoBehaviour
     public void UpdateUIText()
     {
         towerInfoText.text = $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType()} \n " + // show tower element type
-            $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} "; // show tower LV
+            $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} "; // show tower LV
         upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue()})";
         sellButton.GetComponentInChildren<Text>().text = $"Sell ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue() / 2})";
     }
