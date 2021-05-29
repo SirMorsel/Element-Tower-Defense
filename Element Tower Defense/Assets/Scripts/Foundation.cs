@@ -69,6 +69,16 @@ public class Foundation : MonoBehaviour
     {
         print($"Sell tower for {selectedTower.GetComponent<TowerBehavior>().GetTowerValue() / 2}");
         GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurrency(selectedTower.GetComponent<TowerBehavior>().GetTowerValue() / 2);
+        
+        // deselect tower and deactivate tower-UI
+        GameManager.Instance.gameObject.GetComponent<BuildManager>().DeselectTower();
+        GameManager.Instance.gameObject.GetComponent<BuildManager>().DecreasePlayerTowers();
+        Destroy(selectedTower);
+    }
+
+    public GameObject GetTowerInformation()
+    {
+        return tower;
     }
 
     private void OnMouseEnter()
