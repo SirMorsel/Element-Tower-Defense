@@ -52,6 +52,11 @@ public class TowerBehavior : MonoBehaviour
         // SetTowerCrystalColor();
     }
 
+    public Elements GetTowerType()
+    {
+        return towerElement;
+    }
+
     public void UpgradeTower()
     {
         towerLv++;

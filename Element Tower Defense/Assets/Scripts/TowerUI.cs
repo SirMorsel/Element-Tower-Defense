@@ -10,14 +10,16 @@ public class TowerUI : MonoBehaviour
     private GameObject ui;
     private Button upgradeButton;
     private Button sellButton;
+    private Text towerInfoText;
 
     // Start is called before the first frame update
     void Start()
     {
         ui = this.transform.GetChild(0).gameObject;
-        upgradeButton = ui.transform.GetChild(0).GetChild(0).GetComponent<Button>();
-        sellButton = ui.transform.GetChild(0).GetChild(1).GetComponent<Button>();
-        print($"UI: {sellButton}");
+        towerInfoText = ui.transform.GetChild(0).GetChild(0).GetComponent<Text>();
+        upgradeButton = ui.transform.GetChild(0).GetChild(1).GetComponent<Button>();
+        sellButton = ui.transform.GetChild(0).GetChild(2).GetComponent<Button>();
+        print($"UI: {towerInfoText}");
         //GetTowerInformation
         upgradeButton.onClick.AddListener(UpgradeButton_OnClick);//subscribe to the onClick even
         sellButton.onClick.AddListener(SellButton_OnClick); //subscribe to the onClick even
@@ -47,6 +49,8 @@ public class TowerUI : MonoBehaviour
 
     public void UpdateButtonText()
     {
+        towerInfoText.text = $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType()} \n " + // show tower element type
+            $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} "; // show tower LV
         upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue()})";
         sellButton.GetComponentInChildren<Text>().text = $"Sell ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue() / 2})";
     }
