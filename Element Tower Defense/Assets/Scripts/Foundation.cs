@@ -30,12 +30,13 @@ public class Foundation : MonoBehaviour
             // Update tower || sell tower
             print("TOWER FOUND");
             GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
+            // UpgradeTowerUI(tower);
+            // SellTower(tower);
         }
         else
         {
             if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild() != null)
             {
-                //GameManager.Instance.GetComponent
                 if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() <
                     GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
                 {
@@ -51,6 +52,23 @@ public class Foundation : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void UpgradeTowerUI(GameObject selectedTower)
+    {
+        print($"Value of tower {selectedTower.GetComponent<TowerBehavior>().GetTowerValue()}");
+        if (GameManager.Instance.gameObject.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency() >= selectedTower.GetComponent<TowerBehavior>().GetTowerValue())
+        {
+            GameManager.Instance.gameObject.GetComponent<PlayerStats>().DecreaseCurrency(selectedTower.GetComponent<TowerBehavior>().GetTowerValue());
+            selectedTower.GetComponent<TowerBehavior>().UpgradeTower();
+            print($"Lv of tower is: {selectedTower.GetComponent<TowerBehavior>().GetTowerLv()}");
+        }
+    }
+
+    public void SellTower(GameObject selectedTower)
+    {
+        print($"Sell tower for {selectedTower.GetComponent<TowerBehavior>().GetTowerValue() / 2}");
+        GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurrency(selectedTower.GetComponent<TowerBehavior>().GetTowerValue() / 2);
     }
 
     private void OnMouseEnter()

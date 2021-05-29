@@ -27,7 +27,7 @@ public class EnemyStats : MonoBehaviour
         if (isDead)
         {
             // Increase player coins
-            GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurreny(monsterValue);
+            GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurrency(monsterValue);
             GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
             Destroy(this.gameObject);
         }

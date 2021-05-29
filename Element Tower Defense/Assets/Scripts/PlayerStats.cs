@@ -43,8 +43,13 @@ public class PlayerStats : MonoBehaviour
         health--;
     }
 
-    public void CollectCurreny(int amountOfEarnedCurrency)
+    public void CollectCurrency(int amountOfEarnedCurrency)
     {
         currency += amountOfEarnedCurrency;
+    }
+
+    public void DecreaseCurrency(int costs)
+    {
+        currency -= costs;
     }
 }

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TowerBehavior : MonoBehaviour
 {
-    private int towerLv = 3;
+    private int towerLv = 1;
     private Elements towerElement = Elements.NEUTRAL;
+    private int towerValue = 100;
 
     private Transform currentTarget = null;
     private float range = 5f;
@@ -40,12 +41,9 @@ public class TowerBehavior : MonoBehaviour
         {
            SetTowerCrystalColor();
         }
-        
-
-
         // print($"Tower Element {towerElement}");
-
     }
+
     public void SetTowerElement(Elements towerType)
     {
         towerElement = towerType;
@@ -54,7 +52,23 @@ public class TowerBehavior : MonoBehaviour
         // SetTowerCrystalColor();
     }
 
-    public void SetTowerCrystalColor()
+    public void UpgradeTower()
+    {
+        towerLv++;
+        towerValue = towerValue * towerLv;
+    }
+
+    public int GetTowerLv()
+    {
+        return towerLv;
+    }
+
+    public int GetTowerValue()
+    {
+        return towerValue;
+    }
+
+    private void SetTowerCrystalColor()
     {
         switch (towerElement)
         {
