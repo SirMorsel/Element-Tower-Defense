@@ -7,8 +7,6 @@ public class Foundation : MonoBehaviour
     private Color defaultColor;
 
     private GameObject tower;
-    
-
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +25,6 @@ public class Foundation : MonoBehaviour
 
         if (tower != null)
         {
-            // Update tower || sell tower
             print("TOWER FOUND");
             GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
             // UpgradeTowerUI(tower);
@@ -37,14 +34,26 @@ public class Foundation : MonoBehaviour
         {
             if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild() != null)
             {
+                // check if max amount of buildable towers is reached
                 if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() <
                     GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
                 {
-                    // Build tower
-                    tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
-                                                    transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
-                    tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
-                    GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
+                    // check if player has enoughth currency
+                    if (GameManager.Instance.gameObject.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency() >=
+                        GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower())
+                    {
+                        // Build tower
+                        tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
+                                                        transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+                        tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
+                        GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
+                        // decrease player currency
+                        GameManager.Instance.gameObject.GetComponent<PlayerStats>().DecreaseCurrency(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower());
+                    }
+                    else
+                    {
+                        print($"Oh no! It looks you don't have enoughth money left. Damn capitalism!");
+                    }
                 }
                 else
                 {

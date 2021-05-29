@@ -11,6 +11,7 @@ public class BuildManager : MonoBehaviour
 
     private GameObject towerUI;
 
+    private int currencyValueOfTower = 100;
     private int maxAmountOfTowers = 13;
     private int amountOfPlayerTowers = 0;
 
@@ -60,15 +61,17 @@ public class BuildManager : MonoBehaviour
     public void SetTowerToBuild(Elements towerType)
     {
         DeselectTower();
-        //towerToBuild = towerToBuildBackUp;
         towerToBuildElement = towerType;
-        //selectedTower = null;
-        //towerUI.GetComponent<TowerUI>().HideUiElement();
     }
 
     public Elements GetTowerToBuildElement()
     {
         return towerToBuildElement;
+    }
+
+    public int GetCurrencyValueOfTower()
+    {
+        return currencyValueOfTower;
     }
 
 

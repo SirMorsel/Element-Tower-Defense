@@ -6,7 +6,7 @@ public class BulletInfos : MonoBehaviour
 {
 
     private Elements bulletElement = Elements.NEUTRAL;
-    private float damage = 10f;
+    private float damage = 30f;
     private float bulletSpeed = 10f;
     private float bulletLifetime = 10f; // Lifetime in seconds
     private Transform target;

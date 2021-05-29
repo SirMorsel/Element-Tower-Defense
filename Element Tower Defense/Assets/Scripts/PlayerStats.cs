@@ -7,7 +7,7 @@ public class PlayerStats : MonoBehaviour
 {
     private int maxHealth = 25;
     private int health;
-    private int currency = 100;
+    private int currency = 500;
 
     // UI Elements
 
