@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerBehavior : MonoBehaviour
 {
     private int towerLv = 1;
+    private int towerMaxLv = 3;
     private Elements towerElement = Elements.NEUTRAL;
     private int towerValue = 100;
 
@@ -66,6 +67,11 @@ public class TowerBehavior : MonoBehaviour
     public int GetTowerLv()
     {
         return towerLv;
+    }
+
+    public int GetTowerMaxLv()
+    {
+        return towerMaxLv;
     }
 
     public int GetTowerValue()

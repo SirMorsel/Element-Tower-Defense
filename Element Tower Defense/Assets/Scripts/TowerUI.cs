@@ -50,7 +50,17 @@ public class TowerUI : MonoBehaviour
     {
         towerInfoText.text = $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType()} \n " + // show tower element type
             $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} "; // show tower LV
-        upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue()})";
+
+        if (target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() <
+            target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerMaxLv())
+        {
+            upgradeButton.gameObject.SetActive(true);
+            upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue()})";
+        } else
+        {
+            upgradeButton.gameObject.SetActive(false);
+        }
+
         sellButton.GetComponentInChildren<Text>().text = $"Sell ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue() / 2})";
     }
 

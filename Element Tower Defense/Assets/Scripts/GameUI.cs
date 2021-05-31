@@ -138,4 +138,9 @@ public class GameUI : MonoBehaviour
     {
         subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
     }
+
+    public bool IsGameOver()
+    {
+        return gameIsOver;
+    }
 }
