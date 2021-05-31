@@ -14,6 +14,7 @@ public class BuildManager : MonoBehaviour
     private int currencyValueOfTower = 100;
     private int maxAmountOfTowers = 13;
     private int amountOfPlayerTowers = 0;
+    private int towerBaseValue = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +54,11 @@ public class BuildManager : MonoBehaviour
 
     public void DeselectTower()
     {
+        if (selectedTower != null)
+        {
+            //print($"TEST {selectedTower.GetComponent<Foundation>()}");
+            selectedTower.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().ChangeRangeCircleState(false); ;
+        }
         selectedTower = null;
         towerToBuild = towerToBuildBackUp; // refactor
         towerUI.GetComponent<TowerUI>().HideUiElement();
@@ -94,5 +100,10 @@ public class BuildManager : MonoBehaviour
     public void DecreasePlayerTowers()
     {
         amountOfPlayerTowers--;
+    }
+
+    public int GetTowerBaseValue()
+    {
+        return towerBaseValue;
     }
 }

@@ -93,11 +93,21 @@ public class Foundation : MonoBehaviour
     private void OnMouseEnter()
     {
         GetComponent<Renderer>().material.SetColor("_Color", Color.grey);
+        ShowTowerRangeCircle(true);
     }
 
     private void OnMouseExit()
     {
         GetComponent<Renderer>().material.color = defaultColor;
+        ShowTowerRangeCircle(false);
+    }
+
+    private void ShowTowerRangeCircle(bool showRangeCircle)
+    {
+        if (tower != null)
+        {
+            tower.GetComponent<TowerBehavior>().ChangeRangeCircleState(showRangeCircle);
+        }
     }
 
 }

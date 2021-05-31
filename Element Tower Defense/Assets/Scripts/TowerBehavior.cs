@@ -7,9 +7,10 @@ public class TowerBehavior : MonoBehaviour
     private int towerLv = 1;
     private int towerMaxLv = 3;
     private Elements towerElement = Elements.NEUTRAL;
-    private int towerValue = 100;
+    private int towerValue = 0;
 
     private Transform currentTarget = null;
+    private GameObject towerRangeCircle;
     private float range = 5f;
     private float searchInterval = 1f;
     private float rotationSpeed = 5f;
@@ -25,9 +26,13 @@ public class TowerBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        towerValue = GameManager.Instance.GetComponent<BuildManager>().GetTowerBaseValue();
         turretCrystal = this.transform.GetChild(1).transform;
+        towerRangeCircle = this.transform.GetChild(2).gameObject;
+        ChangeRangeCircleState(false);
         bulletSpawn = turretCrystal.GetChild(0).transform;
         InvokeRepeating("SearchForTarget", 0f, searchInterval);
+        print($"Base value of {towerValue}");
     }
 
     // Update is called once per frame
@@ -77,6 +82,11 @@ public class TowerBehavior : MonoBehaviour
     public int GetTowerValue()
     {
         return towerValue;
+    }
+
+    public void ChangeRangeCircleState(bool state)
+    {
+        towerRangeCircle.gameObject.SetActive(state);
     }
 
     private void SetTowerCrystalColor()
