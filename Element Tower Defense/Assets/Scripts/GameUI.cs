@@ -25,14 +25,18 @@ public class GameUI : MonoBehaviour
     // Submenu UI Elements
     private GameObject subMenuUIPanel;
 
-    //private bool gameIsOver;
+    // Shop UI Elements
+    private GameObject shopUIPanel;
+
+    private GameObject fireTowerIcon;
+    private GameObject waterTowerIcon;
+    private GameObject electroTowerIcon;
 
     // Start is called before the first frame update
     void Start()
     {
         InitializeUiElements();
         player = this.GetComponent<PlayerStats>().gameObject;
-       // gameIsOver = false;
         gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
         subMenuUIPanel.SetActive(false);
     }
@@ -84,9 +88,37 @@ public class GameUI : MonoBehaviour
                     break;
             }
         }
+
         gameOverUIPanel = GameObject.Find("Canvas/GameOverPanel");
         subMenuUIPanel = GameObject.Find("Canvas/SubMenuPanel");
+
+        shopUIPanel = GameObject.Find("Canvas/BuildTurretPanel");
+        for (int i = 0; i < shopUIPanel.transform.childCount; i++)
+        {
+            switch (shopUIPanel.transform.GetChild(i).name)
+            {
+                case "TurretFireButton":
+                    fireTowerIcon = shopUIPanel.transform.GetChild(i).gameObject;
+                    fireTowerIcon.GetComponent<Button>().onClick.AddListener(FireTowerShopButton_OnClick);
+                    ChangeAlphaOfImage(fireTowerIcon.GetComponent<Image>(), 0.5f);
+                    break;
+                case "TurretWaterButton":
+                    waterTowerIcon = shopUIPanel.transform.GetChild(i).gameObject;
+                    waterTowerIcon.GetComponent<Button>().onClick.AddListener(WaterTowerShopButton_OnClick);
+                    ChangeAlphaOfImage(waterTowerIcon.GetComponent<Image>(), 0.5f);
+                    break;
+                case "TurretElectroButton":
+                    electroTowerIcon = shopUIPanel.transform.GetChild(i).gameObject;
+                    electroTowerIcon.GetComponent<Button>().onClick.AddListener(ElectroTowerShopButton_OnClick);
+                    ChangeAlphaOfImage(electroTowerIcon.GetComponent<Image>(), 0.5f);
+                    break;
+                default:
+                    print("Unassigned element detected"); // Just for debug
+                    break;
+            }
+        }
         scoreText = gameOverUIPanel.transform.GetChild(1).GetComponent<Text>();
+        print($"Icons {fireTowerIcon} {waterTowerIcon} {electroTowerIcon}");
     }
 
     public void UpdateUI()
@@ -144,5 +176,39 @@ public class GameUI : MonoBehaviour
     public void ChangeSubMenuPanelState()
     {
         subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
+    }
+
+    private void ChangeAlphaOfImage(Image img, float alphaValue)
+    {
+        var tempColor = img.color;
+        tempColor.a = alphaValue;
+        img.GetComponent<Image>().color = tempColor;
+    }
+
+    // Button Events
+    private void FireTowerShopButton_OnClick()
+    {
+        ChangeAlphaOfImage(fireTowerIcon.GetComponent<Image>(), 1f);
+        ChangeAlphaOfImage(waterTowerIcon.GetComponent<Image>(), 0.5f);
+        ChangeAlphaOfImage(electroTowerIcon.GetComponent<Image>(), 0.5f);
+        shopUIPanel.GetComponent<Shop>().BuyFireTower();
+    }
+
+    private void WaterTowerShopButton_OnClick()
+    {
+        ChangeAlphaOfImage(fireTowerIcon.GetComponent<Image>(), 0.5f);
+        ChangeAlphaOfImage(waterTowerIcon.GetComponent<Image>(), 1f);
+        ChangeAlphaOfImage(electroTowerIcon.GetComponent<Image>(), 0.5f);
+        print("Test2");
+        shopUIPanel.GetComponent<Shop>().BuyWaterTower();
+    }
+
+    private void ElectroTowerShopButton_OnClick()
+    {
+        ChangeAlphaOfImage(fireTowerIcon.GetComponent<Image>(), 0.5f);
+        ChangeAlphaOfImage(waterTowerIcon.GetComponent<Image>(), 0.5f);
+        ChangeAlphaOfImage(electroTowerIcon.GetComponent<Image>(), 1f);
+        print("Test3");
+        shopUIPanel.GetComponent<Shop>().BuyElectroTower();
     }
 }
