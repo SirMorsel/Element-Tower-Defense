@@ -18,8 +18,11 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveToWaypoint();
-        SetNewWaypointTarget();
+        if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
+        {
+            MoveToWaypoint();
+            SetNewWaypointTarget();
+        }
     }
 
     private void MoveToWaypoint()

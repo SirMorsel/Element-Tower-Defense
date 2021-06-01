@@ -9,6 +9,8 @@ public class PlayerStats : MonoBehaviour
     private int health;
     private int currency = 500;
 
+    private bool gameIsOver = false;
+
     // UI Elements
 
     // Start is called before the first frame update
@@ -40,7 +42,10 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage()
     {
-        health--;
+        if (!gameIsOver)
+        {
+            health--;
+        }
     }
 
     public void CollectCurrency(int amountOfEarnedCurrency)
@@ -51,5 +56,15 @@ public class PlayerStats : MonoBehaviour
     public void DecreaseCurrency(int costs)
     {
         currency -= costs;
+    }
+
+    public bool IsGameOver()
+    {
+        return gameIsOver;
+    }
+
+    public void SetGameOver()
+    {
+        gameIsOver = true;
     }
 }

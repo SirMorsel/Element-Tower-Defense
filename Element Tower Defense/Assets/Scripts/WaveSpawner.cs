@@ -26,25 +26,32 @@ public class WaveSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetListOfEnemies().Count <= 0)
-        {
-            gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(true);
-            gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(true);
-            if (countdown <= 0)
+        if (!gameObject.GetComponent<PlayerStats>().IsGameOver()) 
+        { 
+            if (GetListOfEnemies().Count <= 0)
             {
-                countdown = nextWaveCountdown;
-                StartCoroutine(SpawnWave());
+                gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(true);
+                gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(true);
+                if (countdown <= 0)
+                {
+                    countdown = nextWaveCountdown;
+                    StartCoroutine(SpawnWave());
+                }
+                gameObject.GetComponent<GameUI>().TimerTextUpdate(countdown);
+                countdown -= Time.deltaTime;
             }
-            gameObject.GetComponent<GameUI>().TimerTextUpdate(countdown);
-            countdown -= Time.deltaTime;
-        } else
+            else
+            {
+                gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(false);
+                gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
+            }
+            // print($"-----> List {GetListOfEnemies().Count}");
+        } 
+        else
         {
             gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(false);
             gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
         }
-
-        // print($"-----> List {GetListOfEnemies().Count}");
-        
     }
 
     public void SpawnWaveOverUI()

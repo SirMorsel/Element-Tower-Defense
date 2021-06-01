@@ -149,7 +149,7 @@ public class TowerBehavior : MonoBehaviour
     private void Fire()
     {
         fireoffset -= Time.deltaTime;
-        if (fireoffset <= 0f)
+        if (fireoffset <= 0f && !GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
             bullet.GetComponent<BulletInfos>().SetBulletElementType(towerElement);

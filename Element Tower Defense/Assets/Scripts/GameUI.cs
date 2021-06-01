@@ -16,6 +16,7 @@ public class GameUI : MonoBehaviour
     private Text waveNumberText;
     private Text nextWaveCountdownText;
     private Button waveSpawnButton;
+    private Button quitButton;
 
     // Game Over UI Elements
     private GameObject gameOverUIPanel;
@@ -24,27 +25,29 @@ public class GameUI : MonoBehaviour
     // Submenu UI Elements
     private GameObject subMenuUIPanel;
 
-    private bool gameIsOver;
+    //private bool gameIsOver;
 
     // Start is called before the first frame update
     void Start()
     {
         InitializeUiElements();
         player = this.GetComponent<PlayerStats>().gameObject;
-        gameIsOver = false;
-        gameOverUIPanel.SetActive(gameIsOver);
+       // gameIsOver = false;
+        gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
         subMenuUIPanel.SetActive(false);
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateUI();
-        if (player.GetComponent<PlayerStats>().GetCurrentHealth() <= 0 && !gameIsOver)
+        if (player.GetComponent<PlayerStats>().GetCurrentHealth() <= 0 && !player.GetComponent<PlayerStats>().IsGameOver())
         {
+            quitButton.interactable = false;
             GameOver();
+        }
+        else
+        {
+            UpdateUI();
         }
     }
 
@@ -73,6 +76,9 @@ public class GameUI : MonoBehaviour
                 case "TriggerWaveButton":
                     waveSpawnButton = uiElements.transform.GetChild(i).GetComponent<Button>();
                     break;
+                case "QuitButton":
+                    quitButton = uiElements.transform.GetChild(i).GetComponent<Button>();
+                    break;
                 default:
                     print("Unassigned element detected"); // Just for debug
                     break;
@@ -97,8 +103,9 @@ public class GameUI : MonoBehaviour
 
     public void GameOver()
     {
-        gameIsOver = true;
-        gameOverUIPanel.SetActive(gameIsOver);
+        //gameIsOver = true;
+        player.GetComponent<PlayerStats>().SetGameOver();
+        gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
         scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
     }
 
@@ -137,10 +144,5 @@ public class GameUI : MonoBehaviour
     public void ChangeSubMenuPanelState()
     {
         subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
-    }
-
-    public bool IsGameOver()
-    {
-        return gameIsOver;
     }
 }

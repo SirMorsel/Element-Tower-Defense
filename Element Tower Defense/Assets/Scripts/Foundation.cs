@@ -22,42 +22,44 @@ public class Foundation : MonoBehaviour
 
     private void OnMouseDown()
     {
-
-        if (tower != null)
+        if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
         {
-            print("TOWER FOUND");
-            GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
-            // UpgradeTowerUI(tower);
-            // SellTower(tower);
-        }
-        else
-        {
-            if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild() != null)
+            if (tower != null)
             {
-                // check if max amount of buildable towers is reached
-                if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() <
-                    GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
+                print("TOWER FOUND");
+                GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
+                // UpgradeTowerUI(tower);
+                // SellTower(tower);
+            }
+            else
+            {
+                if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild() != null)
                 {
-                    // check if player has enoughth currency
-                    if (GameManager.Instance.gameObject.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency() >=
-                        GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower())
+                    // check if max amount of buildable towers is reached
+                    if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() <
+                        GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
                     {
-                        // Build tower
-                        tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
-                                                        transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
-                        tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
-                        GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
-                        // decrease player currency
-                        GameManager.Instance.gameObject.GetComponent<PlayerStats>().DecreaseCurrency(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower());
+                        // check if player has enoughth currency
+                        if (GameManager.Instance.gameObject.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency() >=
+                            GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower())
+                        {
+                            // Build tower
+                            tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
+                                                            transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+                            tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
+                            GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
+                            // decrease player currency
+                            GameManager.Instance.gameObject.GetComponent<PlayerStats>().DecreaseCurrency(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower());
+                        }
+                        else
+                        {
+                            print($"Oh no! It looks you don't have enoughth money left. Damn capitalism!");
+                        }
                     }
                     else
                     {
-                        print($"Oh no! It looks you don't have enoughth money left. Damn capitalism!");
+                        print("Max amount of buildable towers reached!!!");
                     }
-                }
-                else
-                {
-                    print("Max amount of buildable towers reached!!!");
                 }
             }
         }
