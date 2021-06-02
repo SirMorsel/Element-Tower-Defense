@@ -18,6 +18,10 @@ public class MainMenu : MonoBehaviour
         optionMenuPanel = GameObject.Find("Canvas/OptionPanel");
         bgmSlider = optionMenuPanel.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Slider>();
         sfxSlider = optionMenuPanel.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+
+        bgmSlider.value = AudioManager.Instance.GetBMGVolume();
+        sfxSlider.value = AudioManager.Instance.GetSFXVolume();
+
         print($"{bgmSlider} || {sfxSlider}");
         ChangeOptionsUIState(false);
     }
@@ -42,10 +46,12 @@ public class MainMenu : MonoBehaviour
     public void BGMVolume()
     {
         print($"BGM {bgmSlider.value}");
+        AudioManager.Instance.SetBMGVolume(bgmSlider.value);
     }
 
     public void SFXVolume()
     {
         print($"SFX {sfxSlider.value}");
+        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
     }
 }

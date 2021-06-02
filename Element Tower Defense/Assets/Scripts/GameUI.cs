@@ -39,6 +39,10 @@ public class GameUI : MonoBehaviour
         player = this.GetComponent<PlayerStats>().gameObject;
         gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
         subMenuUIPanel.SetActive(false);
+
+        //TEST WIP!!!!!!!!!!!!!!!
+        
+        print($"BGM: {AudioManager.Instance.GetBMGVolume()} SFX: {AudioManager.Instance.GetSFXVolume()}");
     }
 
     // Update is called once per frame

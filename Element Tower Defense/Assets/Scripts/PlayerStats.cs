@@ -17,7 +17,6 @@ public class PlayerStats : MonoBehaviour
     void Awake()
     {
         health = maxHealth;
-
     }
 
     // Update is called once per frame
