@@ -47,7 +47,6 @@ public class TowerBehavior : MonoBehaviour
         {
            SetTowerCrystalColor();
         }
-        // print($"Tower Element {towerElement}");
     }
 
     public void SetTowerElement(Elements towerType)
@@ -55,7 +54,6 @@ public class TowerBehavior : MonoBehaviour
         towerElement = towerType;
         print($"ELEMENT {towerElement}");
         print($"CRYSTAL {turretCrystal}");
-        // SetTowerCrystalColor();
     }
 
     public Elements GetTowerType()
@@ -94,15 +92,12 @@ public class TowerBehavior : MonoBehaviour
         switch (towerElement)
         {
             case Elements.ELECTRO:
-                // print("Case Electro");
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
                 break;
             case Elements.FIRE:
-                // print("Case Fire");
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                 break;
             case Elements.WATER:
-                // print("Case Water");
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
                 break;
             default:
@@ -113,15 +108,11 @@ public class TowerBehavior : MonoBehaviour
     }
     private void SearchForTarget()
     {
-        // GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
-        //List<GameObject> targets = GameObject.Find("GameManager").GetComponent<WaveSpawner>().GetListOfEnemies();
         List<GameObject> targets = GameManager.Instance.gameObject.GetComponent<WaveSpawner>().GetListOfEnemies();
-        // print($"Current amount of items in List: {targets.Count}");
         foreach (var target in targets)
         {
             
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            // print($"------------------------------------- {distance}");
             if (distance < range && currentTarget == null)
             {
               print("Found Target");

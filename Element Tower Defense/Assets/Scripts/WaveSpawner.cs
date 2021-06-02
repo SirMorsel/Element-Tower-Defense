@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    // [System.Serializable]
     public Transform EnemyPrefab;
     public Transform EnemySpawnPoint;
 
@@ -45,7 +44,6 @@ public class WaveSpawner : MonoBehaviour
                 gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(false);
                 gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
             }
-            // print($"-----> List {GetListOfEnemies().Count}");
         } 
         else
         {
@@ -70,7 +68,6 @@ public class WaveSpawner : MonoBehaviour
             listOfEnemies.Add(SpawnEnemy());
             yield return new WaitForSeconds(waitTime);
         }
-        // print($"TEST LIST{listOfEnemies[0]}");
     }
 
     private GameObject SpawnEnemy()

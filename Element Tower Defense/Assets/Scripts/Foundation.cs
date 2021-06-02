@@ -14,12 +14,6 @@ public class Foundation : MonoBehaviour
         defaultColor = GetComponent<Renderer>().material.color;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnMouseDown()
     {
         if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
@@ -28,8 +22,6 @@ public class Foundation : MonoBehaviour
             {
                 print("TOWER FOUND");
                 GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
-                // UpgradeTowerUI(tower);
-                // SellTower(tower);
             }
             else
             {

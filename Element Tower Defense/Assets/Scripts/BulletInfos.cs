@@ -15,7 +15,6 @@ public class BulletInfos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // bulletLiftimeCounter = bulletLifetime;
         Debug.Log($"Bullet {bulletElement} says hello with a damage of: {damage}");
         switch (bulletElement)
         {
@@ -74,8 +73,6 @@ public class BulletInfos : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
-
-
 
     public void SetBulletElementType(Elements elementType)
     {

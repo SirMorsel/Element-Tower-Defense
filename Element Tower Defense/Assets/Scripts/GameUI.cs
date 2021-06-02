@@ -118,7 +118,6 @@ public class GameUI : MonoBehaviour
             }
         }
         scoreText = gameOverUIPanel.transform.GetChild(1).GetComponent<Text>();
-        print($"Icons {fireTowerIcon} {waterTowerIcon} {electroTowerIcon}");
     }
 
     public void UpdateUI()
@@ -135,7 +134,6 @@ public class GameUI : MonoBehaviour
 
     public void GameOver()
     {
-        //gameIsOver = true;
         player.GetComponent<PlayerStats>().SetGameOver();
         gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
         scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
@@ -199,7 +197,6 @@ public class GameUI : MonoBehaviour
         ChangeAlphaOfImage(fireTowerIcon.GetComponent<Image>(), 0.5f);
         ChangeAlphaOfImage(waterTowerIcon.GetComponent<Image>(), 1f);
         ChangeAlphaOfImage(electroTowerIcon.GetComponent<Image>(), 0.5f);
-        print("Test2");
         shopUIPanel.GetComponent<Shop>().BuyWaterTower();
     }
 
@@ -208,7 +205,6 @@ public class GameUI : MonoBehaviour
         ChangeAlphaOfImage(fireTowerIcon.GetComponent<Image>(), 0.5f);
         ChangeAlphaOfImage(waterTowerIcon.GetComponent<Image>(), 0.5f);
         ChangeAlphaOfImage(electroTowerIcon.GetComponent<Image>(), 1f);
-        print("Test3");
         shopUIPanel.GetComponent<Shop>().BuyElectroTower();
     }
 }

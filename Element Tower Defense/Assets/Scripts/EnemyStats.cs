@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
-    private int level;
     private float health = 100.00F;
     private bool isDead = false;
     private Elements monsterElement = Elements.NEUTRAL;
@@ -26,7 +25,6 @@ public class EnemyStats : MonoBehaviour
     {
         if (isDead)
         {
-            // Increase player coins
             GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurrency(monsterValue);
             GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
             Destroy(this.gameObject);
@@ -70,7 +68,6 @@ public class EnemyStats : MonoBehaviour
         {
             health -= CalcDamage(damage, true);
         }
-        // print($"Slime health: {health}");
         if (health <= 0)
         {
             isDead = true;

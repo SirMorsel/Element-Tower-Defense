@@ -1,20 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private GameObject mainMenuPanel;
+    private GameObject optionMenuPanel;
 
-    // Update is called once per frame
-    void Update()
+    private Slider bgmSlider;
+    private Slider sfxSlider;
+
+    private void Start()
     {
-        
+        mainMenuPanel = GameObject.Find("Canvas/MainPanel");
+        optionMenuPanel = GameObject.Find("Canvas/OptionPanel");
+        bgmSlider = optionMenuPanel.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Slider>();
+        sfxSlider = optionMenuPanel.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+        print($"{bgmSlider} || {sfxSlider}");
+        ChangeOptionsUIState(false);
     }
 
     public void StartGame()
@@ -25,5 +30,22 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+
+    public void ChangeOptionsUIState(bool state)
+    {
+        mainMenuPanel.SetActive(!state);
+        optionMenuPanel.SetActive(state);
+    }
+
+    public void BGMVolume()
+    {
+        print($"BGM {bgmSlider.value}");
+    }
+
+    public void SFXVolume()
+    {
+        print($"SFX {sfxSlider.value}");
     }
 }

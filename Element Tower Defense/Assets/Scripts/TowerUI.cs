@@ -19,9 +19,8 @@ public class TowerUI : MonoBehaviour
         towerInfoText = ui.transform.GetChild(0).GetChild(0).GetComponent<Text>();
         upgradeButton = ui.transform.GetChild(0).GetChild(1).GetComponent<Button>();
         sellButton = ui.transform.GetChild(0).GetChild(2).GetComponent<Button>();
-        //GetTowerInformation
-        upgradeButton.onClick.AddListener(UpgradeButton_OnClick);//subscribe to the onClick even
-        sellButton.onClick.AddListener(SellButton_OnClick); //subscribe to the onClick even
+        upgradeButton.onClick.AddListener(UpgradeButton_OnClick);
+        sellButton.onClick.AddListener(SellButton_OnClick);
     }
 
     // Update is called once per frame

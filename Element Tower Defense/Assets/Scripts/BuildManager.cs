@@ -25,12 +25,6 @@ public class BuildManager : MonoBehaviour
         towerToBuild = null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public GameObject GetTowerToBuild()
     {
         // towerToBuild.GetComponent<TowerBehavior>().SetTowerElement(towerToBuildElement);
