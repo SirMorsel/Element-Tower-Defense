@@ -22,6 +22,10 @@ public class TowerBehavior : MonoBehaviour
     private float fireRate = 2f;
     private float fireoffset = 0f;
 
+    // Audio
+    private AudioSource source;
+    [SerializeField] AudioClip[] ElementSounds;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +37,7 @@ public class TowerBehavior : MonoBehaviour
         bulletSpawn = turretCrystal.GetChild(0).transform;
         InvokeRepeating("SearchForTarget", 0f, searchInterval);
         print($"Base value of {towerValue}");
+        source = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -93,12 +98,15 @@ public class TowerBehavior : MonoBehaviour
         {
             case Elements.ELECTRO:
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+                source.clip = ElementSounds[0];
                 break;
             case Elements.FIRE:
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                source.clip = ElementSounds[1];
                 break;
             case Elements.WATER:
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                source.clip = ElementSounds[2];
                 break;
             default:
                 print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
@@ -143,7 +151,7 @@ public class TowerBehavior : MonoBehaviour
         if (fireoffset <= 0f && !GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-            // Audio Source
+            source.PlayOneShot(source.clip, 1);
             bullet.GetComponent<BulletInfos>().SetBulletElementType(towerElement);
             bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv);
             bullet.GetComponent<BulletInfos>().Chase(currentTarget);
