@@ -17,6 +17,7 @@ public class GameUI : MonoBehaviour
     private Text nextWaveCountdownText;
     private Button waveSpawnButton;
     private Button quitButton;
+    private Button optionsButton;
 
     // Game Over UI Elements
     private GameObject gameOverUIPanel;
@@ -24,6 +25,11 @@ public class GameUI : MonoBehaviour
 
     // Submenu UI Elements
     private GameObject subMenuUIPanel;
+
+    // Options UI Elements
+    private GameObject optionsMenuUIPanel;
+    private Slider bgmSlider;
+    private Slider sfxSlider;
 
     // Shop UI Elements
     private GameObject shopUIPanel;
@@ -39,10 +45,7 @@ public class GameUI : MonoBehaviour
         player = this.GetComponent<PlayerStats>().gameObject;
         gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
         subMenuUIPanel.SetActive(false);
-
-        //TEST WIP!!!!!!!!!!!!!!!
-        
-        print($"BGM: {AudioManager.Instance.GetBMGVolume()} SFX: {AudioManager.Instance.GetSFXVolume()}");
+        optionsMenuUIPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,6 +54,7 @@ public class GameUI : MonoBehaviour
         if (player.GetComponent<PlayerStats>().GetCurrentHealth() <= 0 && !player.GetComponent<PlayerStats>().IsGameOver())
         {
             quitButton.interactable = false;
+            optionsButton.interactable = false;
             GameOver();
         }
         else
@@ -87,6 +91,9 @@ public class GameUI : MonoBehaviour
                 case "QuitButton":
                     quitButton = uiElements.transform.GetChild(i).GetComponent<Button>();
                     break;
+                case "OptionsButton":
+                    optionsButton = uiElements.transform.GetChild(i).GetComponent<Button>();
+                    break;
                 default:
                     print("Unassigned element detected"); // Just for debug
                     break;
@@ -95,6 +102,12 @@ public class GameUI : MonoBehaviour
 
         gameOverUIPanel = GameObject.Find("Canvas/GameOverPanel");
         subMenuUIPanel = GameObject.Find("Canvas/SubMenuPanel");
+        optionsMenuUIPanel = GameObject.Find("Canvas/OptionsMenuPanel");
+
+        bgmSlider = optionsMenuUIPanel.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Slider>();
+        sfxSlider = optionsMenuUIPanel.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+        bgmSlider.value = AudioManager.Instance.GetBMGVolume();
+        sfxSlider.value = AudioManager.Instance.GetSFXVolume();
 
         shopUIPanel = GameObject.Find("Canvas/BuildTurretPanel");
         for (int i = 0; i < shopUIPanel.transform.childCount; i++)
@@ -140,6 +153,8 @@ public class GameUI : MonoBehaviour
     {
         player.GetComponent<PlayerStats>().SetGameOver();
         gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
+        subMenuUIPanel.SetActive(false);
+        optionsMenuUIPanel.SetActive(false);
         scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
     }
 
@@ -177,7 +192,26 @@ public class GameUI : MonoBehaviour
 
     public void ChangeSubMenuPanelState()
     {
+        optionsMenuUIPanel.SetActive(false);
         subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
+    }
+
+    public void ChangeOptionsMenuPanelState()
+    {
+        subMenuUIPanel.SetActive(false);
+        optionsMenuUIPanel.SetActive(!optionsMenuUIPanel.activeInHierarchy);
+    }
+
+    public void BGMVolume()
+    {
+        print($"BGM {bgmSlider.value}");
+        AudioManager.Instance.SetBMGVolume(bgmSlider.value);
+    }
+
+    public void SFXVolume()
+    {
+        print($"SFX {sfxSlider.value}");
+        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
     }
 
     private void ChangeAlphaOfImage(Image img, float alphaValue)

@@ -24,7 +24,7 @@ public class TowerBehavior : MonoBehaviour
 
     // Audio
     private AudioSource source;
-    [SerializeField] AudioClip[] ElementSounds;
+    [SerializeField] AudioClip[] elementSounds;
 
 
     // Start is called before the first frame update
@@ -98,15 +98,15 @@ public class TowerBehavior : MonoBehaviour
         {
             case Elements.ELECTRO:
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
-                source.clip = ElementSounds[0];
+                source.clip = elementSounds[0];
                 break;
             case Elements.FIRE:
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                source.clip = ElementSounds[1];
+                source.clip = elementSounds[1];
                 break;
             case Elements.WATER:
                 turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
-                source.clip = ElementSounds[2];
+                source.clip = elementSounds[2];
                 break;
             default:
                 print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
@@ -151,7 +151,8 @@ public class TowerBehavior : MonoBehaviour
         if (fireoffset <= 0f && !GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-            source.PlayOneShot(source.clip, 1);
+            print($"VOLUME OF TOWER {AudioManager.Instance.GetSFXVolume()}");
+            source.PlayOneShot(source.clip, AudioManager.Instance.GetSFXVolume());
             bullet.GetComponent<BulletInfos>().SetBulletElementType(towerElement);
             bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv);
             bullet.GetComponent<BulletInfos>().Chase(currentTarget);

@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2268688491195778893, guid: 16b90e355d39a114a9285d9053cffa3f, type: 3}
-  ElementSounds:
+  elementSounds:
   - {fileID: 8300000, guid: 00155fc5b69e5b04c97cba9c806fe257, type: 3}
   - {fileID: 8300000, guid: 66c23bf833d736e498d4f78ee9dbb895, type: 3}
   - {fileID: 8300000, guid: 5c8970d71b5ac6b418d53e4d1d396a01, type: 3}
