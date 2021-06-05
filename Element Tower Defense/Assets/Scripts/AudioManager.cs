@@ -8,8 +8,9 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager Instance { get { return _instance; } }
 
-    private float bgmValue = 0.5f;
+    private float bgmValue = 0.8f;
     private float sfxVolume = 0.5f;
+    private AudioSource source;
 
 
     private void Awake()
@@ -22,6 +23,8 @@ public class AudioManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
+            source = gameObject.GetComponent<AudioSource>();
+            source.volume = bgmValue;
         }
     }
 
@@ -33,6 +36,7 @@ public class AudioManager : MonoBehaviour
     public void SetBMGVolume(float volume)
     {
         bgmValue = volume;
+        source.volume = bgmValue;
     }
 
     public float GetSFXVolume()
