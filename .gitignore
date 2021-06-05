@@ -10,7 +10,7 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 /Release
-/Assets/Sounds
+[Aa]ssets/Sounds
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 [Aa]ssets/**/*.meta
@@ -60,3 +60,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Sounds
+*.wav
+*.wav.meta
