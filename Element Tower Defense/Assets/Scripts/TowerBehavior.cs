@@ -11,7 +11,7 @@ public class TowerBehavior : MonoBehaviour
 
     private Transform currentTarget = null;
     private GameObject towerRangeCircle;
-    private float range = 5f;
+    private float range = 8f;
     private float searchInterval = 1f;
     private float rotationSpeed = 5f;
 
@@ -143,6 +143,7 @@ public class TowerBehavior : MonoBehaviour
         if (fireoffset <= 0f && !GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            // Audio Source
             bullet.GetComponent<BulletInfos>().SetBulletElementType(towerElement);
             bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv);
             bullet.GetComponent<BulletInfos>().Chase(currentTarget);
