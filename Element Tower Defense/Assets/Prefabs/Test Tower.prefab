@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5450163931631396898}
   - component: {fileID: 3639194265123126316}
   - component: {fileID: 3891809253973845685}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TowerRangeCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 3631517065254246310}
   - component: {fileID: 3631517065254246309}
   - component: {fileID: 3631517065254246308}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Test Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3631517065613125261}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 3631517065827277978}
   - component: {fileID: 3631517065827277977}
   - component: {fileID: 4079977800570242877}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Test Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 3631517066335840279}
   - component: {fileID: 3631517066335840278}
   - component: {fileID: 3631517066335840277}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tower Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
