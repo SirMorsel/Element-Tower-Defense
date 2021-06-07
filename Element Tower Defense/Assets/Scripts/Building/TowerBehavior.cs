@@ -31,10 +31,12 @@ public class TowerBehavior : MonoBehaviour
     void Start()
     {
         towerValue = GameManager.Instance.GetComponent<BuildManager>().GetTowerBaseValue();
-        turretCrystal = this.transform.GetChild(1).transform;
+        turretCrystal = this.transform.GetChild(0);
         towerRangeCircle = this.transform.GetChild(2).gameObject;
         ChangeRangeCircleState(false);
-        bulletSpawn = turretCrystal.GetChild(0).transform;
+       // print($"1 : {turretCrystal.GetChild(0)}");
+        print($"2 : {turretCrystal.GetChild(1)}");
+        bulletSpawn = turretCrystal.GetChild(1).transform;
         InvokeRepeating("SearchForTarget", 0f, searchInterval);
         print($"Base value of {towerValue}");
         source = gameObject.GetComponent<AudioSource>();
@@ -97,20 +99,20 @@ public class TowerBehavior : MonoBehaviour
         switch (towerElement)
         {
             case Elements.ELECTRO:
-                turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
                 source.clip = elementSounds[0];
                 break;
             case Elements.FIRE:
-                turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                 source.clip = elementSounds[1];
                 break;
             case Elements.WATER:
-                turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
                 source.clip = elementSounds[2];
                 break;
             default:
                 print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
-                turretCrystal.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
                 break;
         }
     }

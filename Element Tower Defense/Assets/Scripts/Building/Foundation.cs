@@ -37,7 +37,7 @@ public class Foundation : MonoBehaviour
                         {
                             // Build tower
                             tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
-                                                            transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
+                                                            transform.position, transform.rotation);
                             tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
                             GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
                             // decrease player currency
