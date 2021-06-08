@@ -8,18 +8,21 @@ public class EnemyMovement : MonoBehaviour
     private Transform target;
     private int waypointID = 0;
 
+    private float rotationSpeed = 5f;
+
 
     // Start is called before the first frame update
     void Start()
     {
         target = Waypoints.GetWaypoints()[0];
-    } 
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
         {
+            LookAtWaypoint();
             MoveToWaypoint();
             SetNewWaypointTarget();
         }
@@ -34,12 +37,14 @@ public class EnemyMovement : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
-            if (waypointID < Waypoints.GetWaypoints().Length -1)
+
+            if (waypointID < Waypoints.GetWaypoints().Length - 1)
             {
                 waypointID++;
                 target = Waypoints.GetWaypoints()[waypointID];
                 // Rotate slime to next waypoint
-            } else
+            }
+            else
             {
                 print("Slime reached town!!!!!!");
                 GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
@@ -47,5 +52,13 @@ public class EnemyMovement : MonoBehaviour
                 GameManager.Instance.gameObject.GetComponent<PlayerStats>().TakeDamage();
             }
         }
+    }
+
+    private void LookAtWaypoint()
+    {
+        Vector3 direction = target.position - transform.GetChild(0).position;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Vector3 rotation = Quaternion.Lerp(transform.GetChild(0).rotation, lookRotation, rotationSpeed * Time.deltaTime).eulerAngles;
+        transform.GetChild(0).rotation = Quaternion.Euler(0f, rotation.y, 0f);
     }
 }

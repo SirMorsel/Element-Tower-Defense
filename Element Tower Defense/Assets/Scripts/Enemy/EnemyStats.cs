@@ -91,20 +91,20 @@ public class EnemyStats : MonoBehaviour
         switch (monsterElement)
         {
             case Elements.NEUTRAL:
-                transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
                 break;
             case Elements.ELECTRO:
-                transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+                transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
                 break;
             case Elements.FIRE:
-                transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
                 break;
             case Elements.WATER:
-                transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
                 break;
             default:
                 print("Default case (Somthing bad happend)");
-                transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
                 break;
         }
     }
