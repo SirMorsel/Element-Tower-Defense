@@ -19,6 +19,7 @@ public class TowerBehavior : MonoBehaviour
 
     public GameObject bulletPrefab;
     private Transform bulletSpawn;
+    private float towerDamage = 30f;
     private float fireRate = 2f;
     private float fireoffset = 0f;
 
@@ -156,7 +157,7 @@ public class TowerBehavior : MonoBehaviour
             print($"VOLUME OF TOWER {AudioManager.Instance.GetSFXVolume()}");
             source.PlayOneShot(source.clip, AudioManager.Instance.GetSFXVolume());
             bullet.GetComponent<BulletInfos>().SetBulletElementType(towerElement);
-            bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv);
+            bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv * towerDamage);
             bullet.GetComponent<BulletInfos>().Chase(currentTarget);
 
             fireoffset = fireRate;

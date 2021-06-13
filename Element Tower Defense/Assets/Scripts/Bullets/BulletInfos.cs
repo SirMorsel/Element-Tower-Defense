@@ -6,7 +6,7 @@ public class BulletInfos : MonoBehaviour
 {
 
     private Elements bulletElement = Elements.NEUTRAL;
-    private float damage = 30f;
+    private float bulletDamage;
     private float bulletSpeed = 10f;
     private float bulletLifetime = 10f; // Lifetime in seconds
     private Transform target;
@@ -15,7 +15,6 @@ public class BulletInfos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log($"Bullet {bulletElement} says hello with a damage of: {damage}");
         switch (bulletElement)
         {
             case Elements.ELECTRO:
@@ -65,10 +64,10 @@ public class BulletInfos : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log($"HIT! with a damage of: {damage}");
+            Debug.Log($"HIT! with a damage of: {bulletDamage}");
             if (!other.gameObject.GetComponent<EnemyStats>().GetMonsterStatus())
             {
-                other.gameObject.GetComponent<EnemyStats>().TakeDamage(bulletElement, damage);
+                other.gameObject.GetComponent<EnemyStats>().TakeDamage(bulletElement, bulletDamage);
             }
         }
         Destroy(this.gameObject);
@@ -79,9 +78,9 @@ public class BulletInfos : MonoBehaviour
         bulletElement = elementType;
     }
 
-    public void SetBulletDamage(int towerLv)
+    public void SetBulletDamage(float damage)
     {
-        damage = damage * towerLv;
+        bulletDamage = damage;
     }
 
     public float GetBulletSpeed()
