@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameUI : MonoBehaviour
 {
@@ -212,6 +213,15 @@ public class GameUI : MonoBehaviour
     {
         print($"SFX {sfxSlider.value}");
         AudioManager.Instance.SetSFXVolume(sfxSlider.value);
+    }
+
+    public bool IsASubmenuActive()
+    {
+        if (subMenuUIPanel.activeInHierarchy || optionsMenuUIPanel.activeInHierarchy || gameOverUIPanel.activeInHierarchy)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void ChangeAlphaOfImage(Image img, float alphaValue)

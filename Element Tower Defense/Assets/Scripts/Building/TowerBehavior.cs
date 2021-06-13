@@ -95,6 +95,11 @@ public class TowerBehavior : MonoBehaviour
         towerRangeCircle.gameObject.SetActive(state);
     }
 
+    public float GetTowerDamage()
+    {
+        return towerDamage;
+    }
+
     private void SetTowerCrystalColor()
     {
         switch (towerElement)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Foundation : MonoBehaviour
 {
@@ -16,10 +17,11 @@ public class Foundation : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
+        if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver() && !GameManager.Instance.GetComponent<GameUI>().IsASubmenuActive())
         {
             if (tower != null)
             {
+                if (EventSystem.current.IsPointerOverGameObject()) return; // Prevent click through UI
                 print("TOWER FOUND");
                 GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
             }
