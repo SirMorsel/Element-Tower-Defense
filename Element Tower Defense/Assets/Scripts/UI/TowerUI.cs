@@ -51,7 +51,8 @@ public class TowerUI : MonoBehaviour
     public void UpdateUIText()
     {
         towerInfoText.text = $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType()} " + // show tower element type
-            $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} "; // show tower LV
+            $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} \n " +
+            $"{TowerEffectivenessInformation(target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType())}"; // show tower LV
 
         if (target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() <
             target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerMaxLv())
@@ -87,6 +88,30 @@ public class TowerUI : MonoBehaviour
         {
             target.GetComponent<Foundation>().SellTower(target.GetComponent<Foundation>().GetTowerInformation());
         }
+    }
+
+    private string TowerEffectivenessInformation(Elements towerType)
+    {
+        string towerInfoText = "";
+        switch (towerType)
+        {
+            case Elements.ELECTRO:
+                print("Case Electro");
+                towerInfoText = $" Effective against Water \n Not effecitve against Fire \n No damage against Electro";
+                break;
+            case Elements.FIRE:
+                print("Case Fire");
+                towerInfoText = $" Effective against Electro \n Not effecitve against Water \n No damage against Fire";
+                break;
+            case Elements.WATER:
+                print("Case Water");
+                towerInfoText = $" Effective against Fire \n Not effecitve against Electro \n No damage against Water";
+                break;
+            default:
+                break;
+        }
+
+        return towerInfoText;
     }
 
 }
