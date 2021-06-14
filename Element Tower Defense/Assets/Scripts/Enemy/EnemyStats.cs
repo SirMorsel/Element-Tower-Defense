@@ -1,24 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyStats : MonoBehaviour
 {
-    private float health = 100.00F;
+    private float maxHealth = 100F;
+    private float health;
     private bool isDead = false;
     private Elements monsterElement = Elements.NEUTRAL;
 
     private int monsterValue = 25;
+
+    private Image healthbar;
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
+        healthbar = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
         SetMonsterElement();
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetDeath();
+
     }
 
     public void SetDeath()
@@ -68,9 +74,12 @@ public class EnemyStats : MonoBehaviour
         {
             health -= CalcDamage(damage, true);
         }
+        // Update healthbar
+        healthbar.fillAmount = health / maxHealth;
         if (health <= 0)
         {
             isDead = true;
+            SetDeath();
         }
     }
 
