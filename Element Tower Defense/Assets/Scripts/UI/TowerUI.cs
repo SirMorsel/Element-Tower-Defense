@@ -31,7 +31,7 @@ public class TowerUI : MonoBehaviour
     {
         if (target != null && ui.activeInHierarchy)
         {
-            // send infos to buttons
+            // send infos to UI
             UpdateUIText();
         }
     }
@@ -92,20 +92,24 @@ public class TowerUI : MonoBehaviour
 
     private string TowerEffectivenessInformation(Elements towerType)
     {
+        const string colorTextElectro ="<color=#aa00aaff>Electro</color>";
+        const string colorTextFire = "<color=#ff0000ff>Fire</color>";
+        const string colorTextWater = "<color=#0000ffff>Water</color>";
+
         string towerInfoText = "";
         switch (towerType)
         {
             case Elements.ELECTRO:
                 print("Case Electro");
-                towerInfoText = $" Effective against Water \n Not effecitve against Fire \n No damage against Electro";
+                towerInfoText = $" Effective against {colorTextWater} \n Not effecitve against {colorTextFire} \n No damage against {colorTextElectro}";
                 break;
             case Elements.FIRE:
                 print("Case Fire");
-                towerInfoText = $" Effective against Electro \n Not effecitve against Water \n No damage against Fire";
+                towerInfoText = $" Effective against {colorTextElectro} \n Not effecitve against {colorTextWater} \n No damage against {colorTextFire}";
                 break;
             case Elements.WATER:
                 print("Case Water");
-                towerInfoText = $" Effective against Fire \n Not effecitve against Electro \n No damage against Water";
+                towerInfoText = $" Effective against {colorTextFire} \n Not effecitve against {colorTextElectro} \n No damage against {colorTextWater}";
                 break;
             default:
                 break;
