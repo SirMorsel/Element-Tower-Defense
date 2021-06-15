@@ -17,9 +17,14 @@ public class WaveSpawner : MonoBehaviour
     private float countdown;
 
     private List<GameObject> listOfEnemies = new List<GameObject>();
+
+    // UI
+    private GameUI mainUI;
+
     // Start is called before the first frame update
     void Start()
     {
+        mainUI = gameObject.GetComponent<GameUI>();
         countdown = nextWaveCountdown;
     }
 
@@ -30,34 +35,34 @@ public class WaveSpawner : MonoBehaviour
         { 
             if (GetListOfEnemies().Count <= 0)
             {
-                gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(true);
-                gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(true);
+                mainUI.ChangeWaveSpawnBtnStage(true);
+                mainUI.ChangeCountdownTextStat(true);
                 if (countdown <= 0)
                 {
                     countdown = nextWaveCountdown;
                     StartCoroutine(SpawnWave());
                 }
-                gameObject.GetComponent<GameUI>().TimerTextUpdate(countdown);
+                mainUI.TimerTextUpdate(countdown);
                 countdown -= Time.deltaTime;
             }
             else
             {
-                gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(false);
-                gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
+                mainUI.ChangeCountdownTextStat(false);
+                mainUI.ChangeWaveSpawnBtnStage(false);
             }
         } 
         else
         {
-            gameObject.GetComponent<GameUI>().ChangeCountdownTextStat(false);
-            gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
+            mainUI.ChangeCountdownTextStat(false);
+            mainUI.ChangeWaveSpawnBtnStage(false);
         }
     }
 
     public void SpawnWaveOverUI()
     {
         countdown = nextWaveCountdown;
-        gameObject.GetComponent<GameUI>().TimerTextUpdate(countdown);
-        gameObject.GetComponent<GameUI>().ChangeWaveSpawnBtnStage(false);
+        mainUI.TimerTextUpdate(countdown);
+        mainUI.ChangeWaveSpawnBtnStage(false);
         StartCoroutine(SpawnWave());
     }
 
