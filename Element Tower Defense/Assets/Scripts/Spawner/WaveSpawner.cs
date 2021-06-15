@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Transform EnemyPrefab;
-    public Transform EnemySpawnPoint;
+    [SerializeField] Transform EnemyPrefab;
+    [SerializeField] Transform EnemySpawnPoint;
 
+    // Wave information
     private int currentWaveNumber = 1;
     private int difficultyMultiplyer = 2;
     private float waitTime = 0.75f;

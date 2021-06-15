@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+
+// This file handles the whole Menu in-game UI and his submenus
 public class GameUI : MonoBehaviour
 {
     private GameObject player;
@@ -64,6 +66,95 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    // Public Functions
+    public void UpdateUI()
+    {
+        waveNumberText.text = $"Wave {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
+        playerHealthText.text = $"Health: " +
+            $"{player.GetComponent<PlayerStats>().GetCurrentHealth()}/" +
+            $"{player.GetComponent<PlayerStats>().GetMaxHealth()}";
+        playerCurrencyText.text = $"Currency: {player.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency()}";
+        amountOfTowersText.text = $"Amount Towers: {GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers()} /" +
+                                  $"{GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers()}";
+
+    }
+
+    public void GameOver()
+    {
+        player.GetComponent<PlayerStats>().SetGameOver();
+        gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
+        subMenuUIPanel.SetActive(false);
+        optionsMenuUIPanel.SetActive(false);
+        scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
+    }
+
+    public void TimerTextUpdate(float countdown)
+    {
+        nextWaveCountdownText.text = "Next wave in: " + countdown.ToString("F0");
+        if (countdown < 10)
+        {
+            nextWaveCountdownText.color = Color.red;
+        } else
+        {
+            nextWaveCountdownText.color = Color.white;
+        }
+    }
+
+    public void ChangeWaveSpawnBtnStage(bool state)
+    {
+        waveSpawnButton.interactable = state;
+    }
+
+    public void ChangeCountdownTextStat(bool state)
+    {
+        nextWaveCountdownText.enabled = state;
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ChangeSubMenuPanelState()
+    {
+        optionsMenuUIPanel.SetActive(false);
+        subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
+    }
+
+    public void ChangeOptionsMenuPanelState()
+    {
+        subMenuUIPanel.SetActive(false);
+        optionsMenuUIPanel.SetActive(!optionsMenuUIPanel.activeInHierarchy);
+    }
+
+    public bool IsASubmenuActive()
+    {
+        if (subMenuUIPanel.activeInHierarchy || optionsMenuUIPanel.activeInHierarchy || gameOverUIPanel.activeInHierarchy)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // Volume Functions
+    public void BGMVolume()
+    {
+        print($"BGM {bgmSlider.value}");
+        AudioManager.Instance.SetBMGVolume(bgmSlider.value);
+    }
+
+    public void SFXVolume()
+    {
+        print($"SFX {sfxSlider.value}");
+        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
+    }
+
+    // Private Functions
     private void InitializeUiElements()
     {
         uiElements = GameObject.Find("Canvas");
@@ -136,92 +227,6 @@ public class GameUI : MonoBehaviour
             }
         }
         scoreText = gameOverUIPanel.transform.GetChild(1).GetComponent<Text>();
-    }
-
-    public void UpdateUI()
-    {
-        waveNumberText.text = $"Wave {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
-        playerHealthText.text = $"Health: " +
-            $"{player.GetComponent<PlayerStats>().GetCurrentHealth()}/" +
-            $"{player.GetComponent<PlayerStats>().GetMaxHealth()}";
-        playerCurrencyText.text = $"Currency: {player.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency()}";
-        amountOfTowersText.text = $"Amount Towers: {GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers()} /" +
-                                  $"{GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers()}";
-
-    }
-
-    public void GameOver()
-    {
-        player.GetComponent<PlayerStats>().SetGameOver();
-        gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
-        subMenuUIPanel.SetActive(false);
-        optionsMenuUIPanel.SetActive(false);
-        scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
-    }
-
-    public void TimerTextUpdate(float countdown)
-    {
-        nextWaveCountdownText.text = "Next wave in: " + countdown.ToString("F0");
-        if (countdown < 10)
-        {
-            nextWaveCountdownText.color = Color.red;
-        } else
-        {
-            nextWaveCountdownText.color = Color.white;
-        }
-    }
-
-    public void ChangeWaveSpawnBtnStage(bool state)
-    {
-        waveSpawnButton.interactable = state;
-    }
-
-    public void ChangeCountdownTextStat(bool state)
-    {
-        nextWaveCountdownText.enabled = state;
-    }
-
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-    
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void ChangeSubMenuPanelState()
-    {
-        optionsMenuUIPanel.SetActive(false);
-        subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
-    }
-
-    public void ChangeOptionsMenuPanelState()
-    {
-        subMenuUIPanel.SetActive(false);
-        optionsMenuUIPanel.SetActive(!optionsMenuUIPanel.activeInHierarchy);
-    }
-
-    public void BGMVolume()
-    {
-        print($"BGM {bgmSlider.value}");
-        AudioManager.Instance.SetBMGVolume(bgmSlider.value);
-    }
-
-    public void SFXVolume()
-    {
-        print($"SFX {sfxSlider.value}");
-        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
-    }
-
-    public bool IsASubmenuActive()
-    {
-        if (subMenuUIPanel.activeInHierarchy || optionsMenuUIPanel.activeInHierarchy || gameOverUIPanel.activeInHierarchy)
-        {
-            return true;
-        }
-        return false;
     }
 
     private void ChangeAlphaOfImage(Image img, float alphaValue)

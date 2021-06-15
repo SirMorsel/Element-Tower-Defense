@@ -51,8 +51,8 @@ public class TowerUI : MonoBehaviour
     public void UpdateUIText()
     {
         towerInfoText.text = $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType()} " + // show tower element type
-            $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} \n " +
-            $"{TowerEffectivenessInformation(target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType())}"; // show tower LV
+            $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} \n " + // show tower LV
+            $"{TowerEffectivenessInformation(target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType())}"; // show tower effectivnsess
 
         if (target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() <
             target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerMaxLv())
