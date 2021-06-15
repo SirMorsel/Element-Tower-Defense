@@ -11,21 +11,14 @@ public class PlayerStats : MonoBehaviour
 
     private bool gameIsOver = false;
 
-    private GameObject playerTown;
-
     // UI Elements
+    private Town playerTown;
 
     // Start is called before the first frame update
     void Awake()
     {
-        playerTown = GameObject.Find("PlayerTown");
+        playerTown = GameObject.Find("PlayerTown").GetComponent<Town>();
         health = maxHealth;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public int GetCurrentHealth()
@@ -47,7 +40,7 @@ public class PlayerStats : MonoBehaviour
         if (!gameIsOver)
         {
             health--;
-            playerTown.GetComponent<Town>().UpdatePlayerTownStatus(health);
+            playerTown.UpdatePlayerTownStatus(health);
         }
     }
 
