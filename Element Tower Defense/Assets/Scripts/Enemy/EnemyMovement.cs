@@ -10,17 +10,23 @@ public class EnemyMovement : MonoBehaviour
 
     private float rotationSpeed = 5f;
 
+    private PlayerStats player;
+    private WaveSpawner waveSpawner;
+
 
     // Start is called before the first frame update
     void Start()
     {
         target = Waypoints.GetWaypoints()[0];
+
+        player = GameManager.Instance.GetComponent<PlayerStats>();
+        waveSpawner = GameManager.Instance.GetComponent<WaveSpawner>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
+        if (!player.IsGameOver())
         {
             LookAtWaypoint();
             MoveToWaypoint();
@@ -47,9 +53,9 @@ public class EnemyMovement : MonoBehaviour
             else
             {
                 print("Slime reached town!!!!!!");
-                GameManager.Instance.gameObject.GetComponent<WaveSpawner>().RemoveEnemyFromList(this.gameObject);
+                waveSpawner.RemoveEnemyFromList(this.gameObject);
                 Destroy(this.gameObject);
-                GameManager.Instance.gameObject.GetComponent<PlayerStats>().TakeDamage();
+                player.TakeDamage();
             }
         }
     }

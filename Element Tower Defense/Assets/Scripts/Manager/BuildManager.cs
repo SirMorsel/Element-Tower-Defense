@@ -10,6 +10,8 @@ public class BuildManager : MonoBehaviour
     private Foundation selectedTower;
 
     private GameObject towerUI;
+    private GameUI gameUI;
+
 
     private int currencyValueOfTower = 100;
     private int maxAmountOfTowers = 13;
@@ -20,6 +22,7 @@ public class BuildManager : MonoBehaviour
     void Start()
     {
         towerUI = GameObject.Find("TowerUI");
+        gameUI = GameManager.Instance.GetComponent<GameUI>();
         print($"TEST {towerUI}");
         towerToBuildBackUp = towerToBuild;
         towerToBuild = null;
@@ -27,7 +30,6 @@ public class BuildManager : MonoBehaviour
 
     public GameObject GetTowerToBuild()
     {
-        // towerToBuild.GetComponent<TowerBehavior>().SetTowerElement(towerToBuildElement);
         return towerToBuild;
     }
 
@@ -50,7 +52,6 @@ public class BuildManager : MonoBehaviour
     {
         if (selectedTower != null)
         {
-            //print($"TEST {selectedTower.GetComponent<Foundation>()}");
             selectedTower.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().ChangeRangeCircleState(false); ;
         }
         selectedTower = null;
@@ -89,11 +90,13 @@ public class BuildManager : MonoBehaviour
     public void IncreasePlayerTowers()
     {
         amountOfPlayerTowers++;
+        gameUI.UpdateAmountOfTowerUI(amountOfPlayerTowers, maxAmountOfTowers);
     }
 
     public void DecreasePlayerTowers()
     {
         amountOfPlayerTowers--;
+        gameUI.UpdateAmountOfTowerUI(amountOfPlayerTowers, maxAmountOfTowers);
     }
 
     public int GetTowerBaseValue()

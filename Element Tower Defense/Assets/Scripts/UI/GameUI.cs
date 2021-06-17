@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 
-// This file handles the whole Menu in-game UI and his submenus
+// This file handles the whole gameplay UI and his submenus
 public class GameUI : MonoBehaviour
 {
-    private GameObject player;
+    private PlayerStats player;
+    private BuildManager buildManager;
+    private WaveSpawner waveSpawner;
 
     // Main UI Elements
     private GameObject uiElements;
@@ -44,48 +46,60 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameManager.Instance.GetComponent<PlayerStats>(); //this.GetComponent<PlayerStats>();
+        buildManager = GameManager.Instance.GetComponent<BuildManager>();
+        waveSpawner = GameManager.Instance.GetComponent<WaveSpawner>();
+
         InitializeUiElements();
-        player = this.GetComponent<PlayerStats>().gameObject;
-        gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
+
+        gameOverUIPanel.SetActive(player.IsGameOver());
         subMenuUIPanel.SetActive(false);
         optionsMenuUIPanel.SetActive(false);
+
+        UpdatePlayerCurrencyInUI(player.GetCurrentAmountOfCurrency());
+        UpdatePlayerHealthInUI(player.GetCurrentHealth(), player.GetMaxHealth());
+        UpdateAmountOfTowerUI(buildManager.GetAmountOfTowers(), buildManager.GetMaxAmountOfTowers());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player.GetComponent<PlayerStats>().GetCurrentHealth() <= 0 && !player.GetComponent<PlayerStats>().IsGameOver())
+        if (player.GetCurrentHealth() <= 0 && !player.IsGameOver())
         {
             quitButton.interactable = false;
             optionsButton.interactable = false;
             GameOver();
         }
-        else
-        {
-            UpdateUI();
-        }
     }
 
     // Public Functions
-    public void UpdateUI()
+    public void UpdateAmountOfTowerUI(int amountOfBuildedTowers, int maxAmountOfTowers)
     {
-        waveNumberText.text = $"Wave {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
-        playerHealthText.text = $"Health: " +
-            $"{player.GetComponent<PlayerStats>().GetCurrentHealth()}/" +
-            $"{player.GetComponent<PlayerStats>().GetMaxHealth()}";
-        playerCurrencyText.text = $"Currency: {player.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency()}";
-        amountOfTowersText.text = $"Amount Towers: {GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers()} /" +
-                                  $"{GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers()}";
+        amountOfTowersText.text = $"Amount Towers: {amountOfBuildedTowers} / {maxAmountOfTowers}";
+    }
 
+    public void UpdateWaveNumberInUI()
+    {
+        waveNumberText.text = $"Wave {waveSpawner.GetWaveNumber() - 1}";
+    }
+
+    public void UpdatePlayerCurrencyInUI(int currency)
+    {
+        playerCurrencyText.text = $"Currency: {currency}";
+    }
+
+    public void UpdatePlayerHealthInUI(int currentHealth, int maxHealth)
+    {
+        playerHealthText.text = $"Health: {currentHealth} / {maxHealth}";
     }
 
     public void GameOver()
     {
-        player.GetComponent<PlayerStats>().SetGameOver();
-        gameOverUIPanel.SetActive(player.GetComponent<PlayerStats>().IsGameOver());
+        player.SetGameOver();
+        gameOverUIPanel.SetActive(player.IsGameOver());
         subMenuUIPanel.SetActive(false);
         optionsMenuUIPanel.SetActive(false);
-        scoreText.text = $"Reached Wave: {this.GetComponent<WaveSpawner>().GetWaveNumber() - 1}";
+        scoreText.text = $"Reached Wave: {waveSpawner.GetWaveNumber() - 1}";
     }
 
     public void TimerTextUpdate(float countdown)
@@ -144,13 +158,11 @@ public class GameUI : MonoBehaviour
     // Volume Functions
     public void BGMVolume()
     {
-        print($"BGM {bgmSlider.value}");
         AudioManager.Instance.SetBMGVolume(bgmSlider.value);
     }
 
     public void SFXVolume()
     {
-        print($"SFX {sfxSlider.value}");
         AudioManager.Instance.SetSFXVolume(sfxSlider.value);
     }
 
@@ -170,6 +182,7 @@ public class GameUI : MonoBehaviour
                     break;
                 case "WaveAmountText":
                     waveNumberText = uiElements.transform.GetChild(i).GetComponent<Text>();
+                    UpdateWaveNumberInUI();
                     break;
                 case "AmountOfTowerText":
                     amountOfTowersText = uiElements.transform.GetChild(i).GetComponent<Text>();

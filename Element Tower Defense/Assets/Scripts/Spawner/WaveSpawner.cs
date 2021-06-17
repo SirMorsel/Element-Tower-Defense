@@ -11,20 +11,19 @@ public class WaveSpawner : MonoBehaviour
     private int currentWaveNumber = 1;
     private int difficultyMultiplyer = 2;
     private float waitTime = 0.75f;
+    private List<GameObject> listOfEnemies = new List<GameObject>();
 
     // Wave timer
     private int nextWaveCountdown = 60;
     private float countdown;
 
-    private List<GameObject> listOfEnemies = new List<GameObject>();
-
     // UI
-    private GameUI mainUI;
+    private GameUI gameUI;
 
     // Start is called before the first frame update
     void Start()
     {
-        mainUI = gameObject.GetComponent<GameUI>();
+        gameUI = gameObject.GetComponent<GameUI>();
         countdown = nextWaveCountdown;
     }
 
@@ -35,40 +34,41 @@ public class WaveSpawner : MonoBehaviour
         { 
             if (GetListOfEnemies().Count <= 0)
             {
-                mainUI.ChangeWaveSpawnBtnStage(true);
-                mainUI.ChangeCountdownTextStat(true);
+                gameUI.ChangeWaveSpawnBtnStage(true);
+                gameUI.ChangeCountdownTextStat(true);
                 if (countdown <= 0)
                 {
                     countdown = nextWaveCountdown;
                     StartCoroutine(SpawnWave());
                 }
-                mainUI.TimerTextUpdate(countdown);
+                gameUI.TimerTextUpdate(countdown);
                 countdown -= Time.deltaTime;
             }
             else
             {
-                mainUI.ChangeCountdownTextStat(false);
-                mainUI.ChangeWaveSpawnBtnStage(false);
+                gameUI.ChangeCountdownTextStat(false);
+                gameUI.ChangeWaveSpawnBtnStage(false);
             }
         } 
         else
         {
-            mainUI.ChangeCountdownTextStat(false);
-            mainUI.ChangeWaveSpawnBtnStage(false);
+            gameUI.ChangeCountdownTextStat(false);
+            gameUI.ChangeWaveSpawnBtnStage(false);
         }
     }
 
     public void SpawnWaveOverUI()
     {
         countdown = nextWaveCountdown;
-        mainUI.TimerTextUpdate(countdown);
-        mainUI.ChangeWaveSpawnBtnStage(false);
+        gameUI.TimerTextUpdate(countdown);
+        gameUI.ChangeWaveSpawnBtnStage(false);
         StartCoroutine(SpawnWave());
     }
 
     IEnumerator SpawnWave()
     {
         currentWaveNumber++;
+        gameUI.UpdateWaveNumberInUI();
         for (int i = 0; i < currentWaveNumber + (currentWaveNumber * difficultyMultiplyer); i++)
         {
             listOfEnemies.Add(SpawnEnemy());

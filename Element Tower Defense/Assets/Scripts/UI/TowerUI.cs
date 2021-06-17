@@ -7,8 +7,13 @@ using UnityEngine.UI;
 public class TowerUI : MonoBehaviour
 {
 
-    private Foundation target;
+    private Foundation foundation;
+    private TowerBehavior tower;
     private GameObject ui;
+
+    private GameUI gameUI;
+
+    // UI
     private Button upgradeButton;
     private Button sellButton;
     private Text towerInfoText;
@@ -17,7 +22,19 @@ public class TowerUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ui = this.transform.GetChild(0).gameObject;
+        gameUI = GameManager.Instance.GetComponent<GameUI>();
+        InitializeTowerUI();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void InitializeTowerUI()
+    {
+        ui = transform.GetChild(0).gameObject;
         towerInfoText = ui.transform.GetChild(0).GetChild(0).GetComponent<Text>();
         towerUpgradeInfoText = ui.transform.GetChild(0).GetChild(1).GetComponent<Text>();
         upgradeButton = ui.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Button>();
@@ -26,21 +43,12 @@ public class TowerUI : MonoBehaviour
         sellButton.onClick.AddListener(SellButton_OnClick);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (target != null && ui.activeInHierarchy)
-        {
-            // send infos to UI
-            UpdateUIText();
-        }
-    }
-
     public void SetTarget(Foundation target)
     {
-        this.target = target;
+        foundation = target;
         transform.position = target.transform.position + new Vector3(0, 2.4f,0);
         ui.SetActive(true);
+        UpdateUIText();
     }
 
     public void HideUiElement()
@@ -50,43 +58,41 @@ public class TowerUI : MonoBehaviour
 
     public void UpdateUIText()
     {
-        towerInfoText.text = $"{target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType()} " + // show tower element type
-            $"Lv: {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()} \n " + // show tower LV
-            $"{TowerEffectivenessInformation(target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerType())}"; // show tower effectivnsess
+        tower = foundation.GetTowerInformation().GetComponent<TowerBehavior>();
+        towerInfoText.text = $"{tower.GetTowerType()} Lv: {tower.GetTowerLv()} \n " + // show tower lv and type
+                             $"{TowerEffectivenessInformation(tower.GetTowerType())}"; // show tower effectivnsess
 
-        if (target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() <
-            target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerMaxLv())
+        if (tower.GetTowerLv() < tower.GetTowerMaxLv())
         {
             towerUpgradeInfoText.text = 
-                $"Dmg Lv {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv()}: " +
-                $" {target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() * target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerDamage()}" +
+                $"Dmg Lv {tower.GetTowerLv()}: {tower.GetTowerLv() * tower.GetTowerDamage()}" +
                 $" => " +
-                $"Dmg Lv {(target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() + 1)}: " +
-                $"<color=#006400ff>{(target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerLv() + 1) * target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerDamage()}</color>";
+                $"Dmg Lv {(tower.GetTowerLv() + 1)}: <color=#006400ff>{(tower.GetTowerLv() + 1) * tower.GetTowerDamage()}</color>";
             upgradeButton.gameObject.SetActive(true);
-            upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue()})";
+            upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({tower.GetTowerValue()})";
         } else
         {
             towerUpgradeInfoText.text = "";
             upgradeButton.gameObject.SetActive(false);
         }
 
-        sellButton.GetComponentInChildren<Text>().text = $"Sell ({target.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().GetTowerValue() / 2})";
+        sellButton.GetComponentInChildren<Text>().text = $"Sell ({tower.GetTowerValue() / 2})";
     }
 
     private void UpgradeButton_OnClick()
     {
-        if (!GameManager.Instance.GetComponent<GameUI>().IsASubmenuActive())
+        if (!gameUI.IsASubmenuActive())
         {
-            target.GetComponent<Foundation>().UpgradeTowerUI(target.GetComponent<Foundation>().GetTowerInformation());
+            foundation.UpgradeTowerUI(foundation.GetTowerInformation());
         }
+        UpdateUIText();
     }
 
     private void SellButton_OnClick()
     {
-        if (!GameManager.Instance.GetComponent<GameUI>().IsASubmenuActive())
+        if (!gameUI.IsASubmenuActive())
         {
-            target.GetComponent<Foundation>().SellTower(target.GetComponent<Foundation>().GetTowerInformation());
+            foundation.SellTower(foundation.GetTowerInformation());
         }
     }
 

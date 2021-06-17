@@ -11,12 +11,13 @@ public class PlayerStats : MonoBehaviour
 
     private bool gameIsOver = false;
 
-    // UI Elements
+    private GameUI gameUI;
     private Town playerTown;
 
     // Start is called before the first frame update
     void Awake()
     {
+        gameUI = GameManager.Instance.GetComponent<GameUI>();
         playerTown = GameObject.Find("PlayerTown").GetComponent<Town>();
         health = maxHealth;
     }
@@ -40,6 +41,7 @@ public class PlayerStats : MonoBehaviour
         if (!gameIsOver)
         {
             health--;
+            gameUI.UpdatePlayerHealthInUI(health, maxHealth);
             playerTown.UpdatePlayerTownStatus(health);
         }
     }
@@ -47,11 +49,13 @@ public class PlayerStats : MonoBehaviour
     public void CollectCurrency(int amountOfEarnedCurrency)
     {
         currency += amountOfEarnedCurrency;
+        gameUI.UpdatePlayerCurrencyInUI(currency);
     }
 
     public void DecreaseCurrency(int costs)
     {
         currency -= costs;
+        gameUI.UpdatePlayerCurrencyInUI(currency);
     }
 
     public bool IsGameOver()
