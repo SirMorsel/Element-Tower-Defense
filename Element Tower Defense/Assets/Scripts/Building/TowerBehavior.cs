@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerBehavior : MonoBehaviour
 {
-    // Tower informations
+    // Tower base informations
     private int towerLv = 1;
     private int towerMaxLv = 3;
     private Elements towerElement = Elements.NEUTRAL;
@@ -99,25 +99,27 @@ public class TowerBehavior : MonoBehaviour
     private void SetTowerCrystalColor()
     {
         Renderer turretCrystalRenderer = turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        Color turretCrystalColor;
         switch (towerElement)
         {
             case Elements.ELECTRO:
-                turretCrystalRenderer.material.SetColor("_Color", Color.magenta);
+                turretCrystalColor = Color.magenta;
                 source.clip = elementSounds[0];
                 break;
             case Elements.FIRE:
-                turretCrystalRenderer.material.SetColor("_Color", Color.red);
+                turretCrystalColor = Color.red;
                 source.clip = elementSounds[1];
                 break;
             case Elements.WATER:
-                turretCrystalRenderer.material.SetColor("_Color", Color.blue);
+                turretCrystalColor = Color.blue;
                 source.clip = elementSounds[2];
                 break;
             default:
-                print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
-                turretCrystalRenderer.material.SetColor("_Color", Color.white);
+                print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.)");
+                turretCrystalColor = Color.white;
                 break;
         }
+        turretCrystalRenderer.material.SetColor("_Color", turretCrystalColor);
     }
     private void SearchForTarget()
     {

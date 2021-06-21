@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+    // Manager informations
+    private GameUI gameUI;
+    private PlayerStats player;
+
     // Enemy and Spawn informations
     [SerializeField] Transform enemyPrefab;
     [SerializeField] Transform enemySpawnPoint;
@@ -18,20 +22,19 @@ public class WaveSpawner : MonoBehaviour
     private int nextWaveCountdown = 60;
     private float countdown;
 
-    // UI
-    private GameUI gameUI;
-
     // Start is called before the first frame update
     void Start()
     {
-        gameUI = gameObject.GetComponent<GameUI>();
+        gameUI = GameManager.Instance.GetComponent<GameUI>();
+        player = GameManager.Instance.GetComponent<PlayerStats>();
+
         countdown = nextWaveCountdown;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gameObject.GetComponent<PlayerStats>().IsGameOver()) 
+        if (!player.IsGameOver()) 
         { 
             if (GetListOfEnemies().Count <= 0)
             {

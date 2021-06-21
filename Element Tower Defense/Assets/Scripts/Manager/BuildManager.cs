@@ -10,7 +10,7 @@ public class BuildManager : MonoBehaviour
     private Elements towerToBuildElement = Elements.WATER;
     private Foundation selectedTower;
 
-    // UI
+    // UI Elements
     private GameObject towerUI;
     private GameUI gameUI;
 

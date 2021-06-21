@@ -6,11 +6,14 @@ using UnityEngine.UI;
 
 public class TowerUI : MonoBehaviour
 {
-    private Foundation foundation;
+    // Manager informations
     private GameUI gameUI;
+
+    // Building informations
+    private Foundation foundation;
     private TowerBehavior tower;
 
-    // UI
+    // UI Elements
     private GameObject ui;
     private Button upgradeButton;
     private Button sellButton;

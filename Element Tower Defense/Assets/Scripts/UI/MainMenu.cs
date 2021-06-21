@@ -6,26 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    // UI Elements
     private GameObject mainMenuPanel;
     private GameObject optionMenuPanel;
 
+    // Volume sliders
     private Slider bgmSlider;
     private Slider sfxSlider;
 
-    private void Start()
+    void Start()
     {
+        // Initalize UI Elements
         mainMenuPanel = GameObject.Find("Canvas/MainPanel");
-        optionMenuPanel = GameObject.Find("Canvas/OptionPanel");
-        bgmSlider = optionMenuPanel.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Slider>();
-        sfxSlider = optionMenuPanel.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+        InitializeMainMenuOptionsUI();
 
-        bgmSlider.value = AudioManager.Instance.GetBMGVolume();
-        sfxSlider.value = AudioManager.Instance.GetSFXVolume();
-
-        print($"{bgmSlider} || {sfxSlider}");
+        // Hide Submenue
         ChangeOptionsUIState(false);
     }
 
+    // Public Functions
     public void StartGame()
     {
         SceneManager.LoadScene("Main");
@@ -36,7 +35,6 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-
     public void ChangeOptionsUIState(bool state)
     {
         mainMenuPanel.SetActive(!state);
@@ -45,13 +43,22 @@ public class MainMenu : MonoBehaviour
 
     public void BGMVolume()
     {
-        print($"BGM {bgmSlider.value}");
         AudioManager.Instance.SetBMGVolume(bgmSlider.value);
     }
 
     public void SFXVolume()
     {
-        print($"SFX {sfxSlider.value}");
         AudioManager.Instance.SetSFXVolume(sfxSlider.value);
+    }
+
+    // Private Functions
+    private void InitializeMainMenuOptionsUI()
+    {
+        optionMenuPanel = GameObject.Find("Canvas/OptionPanel");
+        bgmSlider = optionMenuPanel.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Slider>();
+        sfxSlider = optionMenuPanel.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
+
+        bgmSlider.value = AudioManager.Instance.GetBMGVolume();
+        sfxSlider.value = AudioManager.Instance.GetSFXVolume();
     }
 }

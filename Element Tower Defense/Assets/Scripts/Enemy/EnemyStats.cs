@@ -6,20 +6,20 @@ using UnityEngine.UI;
 public class EnemyStats : MonoBehaviour
 {
     // Enemy information
-    private Renderer enemyColor;
+    private Renderer enemyRenderer;
     private float maxHealth = 100F;
     private float health;
     private bool isDead = false;
     private Elements enemyElement = Elements.NEUTRAL;
     private int enemyValue = 25;
 
-    // UI
+    // UI Elements
     private Image healthbar;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyColor = transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        enemyRenderer = transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
         health = maxHealth;
         healthbar = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
         SetEnemyElement();
@@ -98,24 +98,27 @@ public class EnemyStats : MonoBehaviour
     private void SetEnemyElement()
     {
         enemyElement = (Elements)Random.Range(0, 4);
+        Color elementColor;
+
         switch (enemyElement)
         {
             case Elements.NEUTRAL:
-                enemyColor.material.SetColor("_Color", Color.white);
+                elementColor = Color.white;
                 break;
             case Elements.ELECTRO:
-                enemyColor.material.SetColor("_Color", Color.magenta);
+                elementColor = Color.magenta;
                 break;
             case Elements.FIRE:
-                enemyColor.material.SetColor("_Color", Color.red);
+                elementColor = Color.red;
                 break;
             case Elements.WATER:
-                enemyColor.material.SetColor("_Color", Color.blue);
+                elementColor = Color.blue;
                 break;
             default:
                 print("Default case (Somthing bad happend)");
-                enemyColor.material.SetColor("_Color", Color.white);
+                elementColor = Color.white;
                 break;
         }
+        enemyRenderer.material.SetColor("_Color", elementColor);
     }
 }

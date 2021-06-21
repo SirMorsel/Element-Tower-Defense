@@ -6,6 +6,7 @@ public class Waypoints : MonoBehaviour
 {
     public Transform waypointHolder;
     public static Transform[] waypoints;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -15,12 +16,6 @@ public class Waypoints : MonoBehaviour
             // print($"Point {waypointHolder.transform.GetChild(i).name}");
             waypoints[i] = waypointHolder.transform.GetChild(i);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public static Transform[] GetWaypoints()

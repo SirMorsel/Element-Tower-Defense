@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private float speed = 2.5f;
-    private Transform target;
-    private int waypointID = 0;
-
-    private float rotationSpeed = 5f;
-
+    // Manager informations
     private PlayerStats player;
     private WaveSpawner waveSpawner;
 
+    // Movement informations
+    private float speed = 2.5f;
+    private float rotationSpeed = 5f;
+    private Transform target;
+    private int waypointID = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         target = Waypoints.GetWaypoints()[0];
-
         player = GameManager.Instance.GetComponent<PlayerStats>();
         waveSpawner = GameManager.Instance.GetComponent<WaveSpawner>();
     }

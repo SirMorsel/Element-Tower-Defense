@@ -5,14 +5,14 @@ using UnityEngine.EventSystems;
 
 public class Foundation : MonoBehaviour
 {
-    private Color defaultFoundationColor;
-    private GameObject tower;
-
     // Manager informations
     private BuildManager buildManager;
     private GameUI gameUI;
     private PlayerStats player;
 
+    // Foundation and tower informations
+    private Color defaultFoundationColor;
+    private GameObject tower;
 
     // Start is called before the first frame update
     void Start()

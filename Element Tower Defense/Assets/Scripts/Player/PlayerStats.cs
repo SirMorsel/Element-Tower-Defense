@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    // Manager informations
+    private GameUI gameUI;
+    private Town playerTown;
+
     // Player informations
     private int maxHealth = 25;
     private int health;
@@ -12,9 +16,6 @@ public class PlayerStats : MonoBehaviour
 
     // Player state
     private bool gameIsOver = false;
-
-    private GameUI gameUI;
-    private Town playerTown;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,6 +25,7 @@ public class PlayerStats : MonoBehaviour
         health = maxHealth;
     }
 
+    // Public Functions
     public int GetCurrentHealth()
     {
         return health;
@@ -36,7 +38,6 @@ public class PlayerStats : MonoBehaviour
     {
         return currency;
     }
-
 
     public void TakeDamage()
     {

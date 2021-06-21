@@ -8,7 +8,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager Instance { get { return _instance; } }
 
-    private float bgmValue = 0.8f;
+    // Audio informations
+    private float bgmValue = 0.6f;
     private float sfxVolume = 0.5f;
     private AudioSource source;
 

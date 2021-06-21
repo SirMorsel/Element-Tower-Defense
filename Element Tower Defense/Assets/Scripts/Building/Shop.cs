@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    private BuildManager buildManager;
+
+    void Start()
+    {
+        buildManager = GameManager.Instance.gameObject.GetComponent<BuildManager>();
+    }
+
     public void BuyFireTower()
     {
-        GameManager.Instance.gameObject.GetComponent<BuildManager>().SetTowerToBuild(Elements.FIRE);
-        print("FIRE");
+        buildManager.SetTowerToBuild(Elements.FIRE);
     }
 
     public void BuyWaterTower()
     {
-        GameManager.Instance.gameObject.GetComponent<BuildManager>().SetTowerToBuild(Elements.WATER);
-        print("WATER");
+        buildManager.SetTowerToBuild(Elements.WATER);
     }
 
     public void BuyElectroTower()
     {
-        GameManager.Instance.gameObject.GetComponent<BuildManager>().SetTowerToBuild(Elements.ELECTRO);
-        print("ELECTRO");
+        buildManager.SetTowerToBuild(Elements.ELECTRO);
     }
 }

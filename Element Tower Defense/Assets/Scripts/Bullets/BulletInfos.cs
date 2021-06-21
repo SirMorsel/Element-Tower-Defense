@@ -11,7 +11,6 @@ public class BulletInfos : MonoBehaviour
     private float bulletLifetime = 10f; // Lifetime in seconds
     private Transform target;
 
-
     // Start is called before the first frame update
     void Start()
     {

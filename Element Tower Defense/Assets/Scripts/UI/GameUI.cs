@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 // This file handles the whole gameplay UI and his submenus
 public class GameUI : MonoBehaviour
 {
+    // Manager informations
     private PlayerStats player;
     private BuildManager buildManager;
     private WaveSpawner waveSpawner;
@@ -38,7 +39,6 @@ public class GameUI : MonoBehaviour
 
     // Shop UI Elements
     private GameObject shopUIPanel;
-
     private GameObject fireTowerIcon;
     private GameObject waterTowerIcon;
     private GameObject electroTowerIcon;
