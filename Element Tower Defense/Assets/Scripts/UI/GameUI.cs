@@ -29,7 +29,7 @@ public class GameUI : MonoBehaviour
     private Text scoreText;
 
     // Submenu UI Elements
-    private GameObject subMenuUIPanel;
+    private GameObject quitMenuPanel;
 
     // Options UI Elements
     private GameObject optionsMenuUIPanel;
@@ -46,16 +46,23 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameManager.Instance.GetComponent<PlayerStats>(); //this.GetComponent<PlayerStats>();
+        player = GameManager.Instance.GetComponent<PlayerStats>();
         buildManager = GameManager.Instance.GetComponent<BuildManager>();
         waveSpawner = GameManager.Instance.GetComponent<WaveSpawner>();
 
-        InitializeUiElements();
+        // Initalize UI Elements
+        InitializeMainUI();
+        InitializeOptionsUI();
+        InitializeShopUI();
+        InitializeQuitUI();
+        InitializeGameOverUI();
 
+        // Hide Submenues
         gameOverUIPanel.SetActive(player.IsGameOver());
-        subMenuUIPanel.SetActive(false);
+        quitMenuPanel.SetActive(false);
         optionsMenuUIPanel.SetActive(false);
 
+        // Set Player start values
         UpdatePlayerCurrencyInUI(player.GetCurrentAmountOfCurrency());
         UpdatePlayerHealthInUI(player.GetCurrentHealth(), player.GetMaxHealth());
         UpdateAmountOfTowerUI(buildManager.GetAmountOfTowers(), buildManager.GetMaxAmountOfTowers());
@@ -97,7 +104,7 @@ public class GameUI : MonoBehaviour
     {
         player.SetGameOver();
         gameOverUIPanel.SetActive(player.IsGameOver());
-        subMenuUIPanel.SetActive(false);
+        quitMenuPanel.SetActive(false);
         optionsMenuUIPanel.SetActive(false);
         scoreText.text = $"Reached Wave: {waveSpawner.GetWaveNumber() - 1}";
     }
@@ -137,18 +144,18 @@ public class GameUI : MonoBehaviour
     public void ChangeSubMenuPanelState()
     {
         optionsMenuUIPanel.SetActive(false);
-        subMenuUIPanel.SetActive(!subMenuUIPanel.activeInHierarchy);
+        quitMenuPanel.SetActive(!quitMenuPanel.activeInHierarchy);
     }
 
     public void ChangeOptionsMenuPanelState()
     {
-        subMenuUIPanel.SetActive(false);
+        quitMenuPanel.SetActive(false);
         optionsMenuUIPanel.SetActive(!optionsMenuUIPanel.activeInHierarchy);
     }
 
     public bool IsASubmenuActive()
     {
-        if (subMenuUIPanel.activeInHierarchy || optionsMenuUIPanel.activeInHierarchy || gameOverUIPanel.activeInHierarchy)
+        if (quitMenuPanel.activeInHierarchy || optionsMenuUIPanel.activeInHierarchy || gameOverUIPanel.activeInHierarchy)
         {
             return true;
         }
@@ -167,7 +174,7 @@ public class GameUI : MonoBehaviour
     }
 
     // Private Functions
-    private void InitializeUiElements()
+    private void InitializeMainUI()
     {
         uiElements = GameObject.Find("Canvas");
         for (int i = 0; i < uiElements.transform.childCount; i++)
@@ -205,15 +212,22 @@ public class GameUI : MonoBehaviour
             }
         }
 
-        gameOverUIPanel = GameObject.Find("Canvas/GameOverPanel");
-        subMenuUIPanel = GameObject.Find("Canvas/SubMenuPanel");
+
+
+    }
+
+    private void InitializeOptionsUI()
+    {
         optionsMenuUIPanel = GameObject.Find("Canvas/OptionsMenuPanel");
 
         bgmSlider = optionsMenuUIPanel.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<Slider>();
         sfxSlider = optionsMenuUIPanel.transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Slider>();
         bgmSlider.value = AudioManager.Instance.GetBMGVolume();
         sfxSlider.value = AudioManager.Instance.GetSFXVolume();
+    }
 
+    private void InitializeShopUI()
+    {
         shopUIPanel = GameObject.Find("Canvas/BuildTurretPanel");
         for (int i = 0; i < shopUIPanel.transform.childCount; i++)
         {
@@ -239,6 +253,16 @@ public class GameUI : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void InitializeQuitUI()
+    {
+        quitMenuPanel = GameObject.Find("Canvas/QuitMenuPanel");
+    }
+
+    private void InitializeGameOverUI()
+    {
+        gameOverUIPanel = GameObject.Find("Canvas/GameOverPanel");
         scoreText = gameOverUIPanel.transform.GetChild(1).GetComponent<Text>();
     }
 

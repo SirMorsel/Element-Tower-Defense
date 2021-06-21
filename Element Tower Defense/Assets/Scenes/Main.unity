@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 17426259}
   - component: {fileID: 17426258}
   m_Layer: 5
-  m_Name: SubmentTitle
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7810,7 +7810,7 @@ GameObject:
   - component: {fileID: 1363957592}
   - component: {fileID: 1363957591}
   m_Layer: 5
-  m_Name: SubMenuPanel
+  m_Name: QuitMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
