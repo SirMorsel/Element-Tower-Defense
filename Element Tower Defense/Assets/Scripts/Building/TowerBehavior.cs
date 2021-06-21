@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class TowerBehavior : MonoBehaviour
 {
+    // Tower informations
     private int towerLv = 1;
     private int towerMaxLv = 3;
     private Elements towerElement = Elements.NEUTRAL;
     private int towerValue = 0;
 
+    // Aiming and detection
     private Transform currentTarget = null;
     private GameObject towerRangeCircle;
     private float range = 8f;
     private float searchInterval = 1f;
     private float rotationSpeed = 5f;
 
+    // Tower offensive informations
     private Transform turretCrystal;
-
     public GameObject bulletPrefab;
     private Transform bulletSpawn;
     private float towerDamage = 30f;
@@ -35,12 +37,10 @@ public class TowerBehavior : MonoBehaviour
         turretCrystal = this.transform.GetChild(0);
         towerRangeCircle = this.transform.GetChild(2).gameObject;
         ChangeRangeCircleState(false);
-       // print($"1 : {turretCrystal.GetChild(0)}");
-        print($"2 : {turretCrystal.GetChild(1)}");
         bulletSpawn = turretCrystal.GetChild(1).transform;
         InvokeRepeating("SearchForTarget", 0f, searchInterval);
-        print($"Base value of {towerValue}");
         source = gameObject.GetComponent<AudioSource>();
+        SetTowerCrystalColor();
     }
 
     // Update is called once per frame
@@ -51,17 +51,12 @@ public class TowerBehavior : MonoBehaviour
             LockTarget();
             Fire();
         }
-        if (turretCrystal != null)
-        {
-           SetTowerCrystalColor();
-        }
     }
 
+    // Public Functions
     public void SetTowerElement(Elements towerType)
     {
         towerElement = towerType;
-        print($"ELEMENT {towerElement}");
-        print($"CRYSTAL {turretCrystal}");
     }
 
     public Elements GetTowerType()
@@ -100,25 +95,27 @@ public class TowerBehavior : MonoBehaviour
         return towerDamage;
     }
 
+    // Private Functions
     private void SetTowerCrystalColor()
     {
+        Renderer turretCrystalRenderer = turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>();
         switch (towerElement)
         {
             case Elements.ELECTRO:
-                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+                turretCrystalRenderer.material.SetColor("_Color", Color.magenta);
                 source.clip = elementSounds[0];
                 break;
             case Elements.FIRE:
-                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                turretCrystalRenderer.material.SetColor("_Color", Color.red);
                 source.clip = elementSounds[1];
                 break;
             case Elements.WATER:
-                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                turretCrystalRenderer.material.SetColor("_Color", Color.blue);
                 source.clip = elementSounds[2];
                 break;
             default:
                 print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
-                turretCrystal.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                turretCrystalRenderer.material.SetColor("_Color", Color.white);
                 break;
         }
     }

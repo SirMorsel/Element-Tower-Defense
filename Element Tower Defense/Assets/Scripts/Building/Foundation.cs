@@ -24,6 +24,32 @@ public class Foundation : MonoBehaviour
         defaultFoundationColor = GetComponent<Renderer>().material.color;
     }
 
+
+    // Public Functions
+    public void UpgradeTowerUI(TowerBehavior selectedTower)
+    {
+        if (player.GetCurrentAmountOfCurrency() >= selectedTower.GetTowerValue())
+        {
+            player.DecreaseCurrency(selectedTower.GetTowerValue());
+            selectedTower.UpgradeTower();
+        }
+    }
+
+    public void SellTower(TowerBehavior selectedTower)
+    {
+        player.CollectCurrency(selectedTower.GetTowerValue() / 2);
+        // deselect tower and deactivate tower-UI
+        buildManager.DeselectTower();
+        buildManager.DecreasePlayerTowers();
+        Destroy(selectedTower.gameObject);
+    }
+
+    public GameObject GetTowerInformation()
+    {
+        return tower;
+    }
+
+    // Private Functions
     private void OnMouseDown()
     {
         if (!player.IsGameOver() && !gameUI.IsASubmenuActive())
@@ -62,29 +88,6 @@ public class Foundation : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void UpgradeTowerUI(TowerBehavior selectedTower)
-    {
-        if (player.GetCurrentAmountOfCurrency() >= selectedTower.GetTowerValue())
-        {
-            player.DecreaseCurrency(selectedTower.GetTowerValue());
-            selectedTower.UpgradeTower();
-        }
-    }
-
-    public void SellTower(TowerBehavior selectedTower)
-    {
-        player.CollectCurrency(selectedTower.GetTowerValue() / 2);
-        // deselect tower and deactivate tower-UI
-        buildManager.DeselectTower();
-        buildManager.DecreasePlayerTowers();
-        Destroy(selectedTower.gameObject);
-    }
-
-    public GameObject GetTowerInformation()
-    {
-        return tower;
     }
 
     private void OnMouseEnter()
