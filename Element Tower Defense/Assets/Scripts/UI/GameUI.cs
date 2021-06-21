@@ -211,9 +211,6 @@ public class GameUI : MonoBehaviour
                     break;
             }
         }
-
-
-
     }
 
     private void InitializeOptionsUI()

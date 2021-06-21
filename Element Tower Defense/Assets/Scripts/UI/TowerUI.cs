@@ -6,14 +6,12 @@ using UnityEngine.UI;
 
 public class TowerUI : MonoBehaviour
 {
-
     private Foundation foundation;
-    private TowerBehavior tower;
-    private GameObject ui;
-
     private GameUI gameUI;
+    private TowerBehavior tower;
 
     // UI
+    private GameObject ui;
     private Button upgradeButton;
     private Button sellButton;
     private Text towerInfoText;
@@ -26,19 +24,17 @@ public class TowerUI : MonoBehaviour
         InitializeTowerUI();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    // Public Functions
     public void InitializeTowerUI()
     {
         ui = transform.GetChild(0).gameObject;
         towerInfoText = ui.transform.GetChild(0).GetChild(0).GetComponent<Text>();
         towerUpgradeInfoText = ui.transform.GetChild(0).GetChild(1).GetComponent<Text>();
+
         upgradeButton = ui.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Button>();
         sellButton = ui.transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Button>();
+
+        // Add events to buttons
         upgradeButton.onClick.AddListener(UpgradeButton_OnClick);
         sellButton.onClick.AddListener(SellButton_OnClick);
     }
@@ -62,6 +58,7 @@ public class TowerUI : MonoBehaviour
         towerInfoText.text = $"{tower.GetTowerType()} Lv: {tower.GetTowerLv()} \n " + // show tower lv and type
                              $"{TowerEffectivenessInformation(tower.GetTowerType())}"; // show tower effectivnsess
 
+        // Current information text / Update information text
         if (tower.GetTowerLv() < tower.GetTowerMaxLv())
         {
             towerUpgradeInfoText.text = 
@@ -72,30 +69,14 @@ public class TowerUI : MonoBehaviour
             upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({tower.GetTowerValue()})";
         } else
         {
-            towerUpgradeInfoText.text = "";
+            towerUpgradeInfoText.text = $"Dmg Lv {tower.GetTowerLv()}: {tower.GetTowerLv() * tower.GetTowerDamage()}";
             upgradeButton.gameObject.SetActive(false);
         }
 
         sellButton.GetComponentInChildren<Text>().text = $"Sell ({tower.GetTowerValue() / 2})";
     }
 
-    private void UpgradeButton_OnClick()
-    {
-        if (!gameUI.IsASubmenuActive())
-        {
-            foundation.UpgradeTowerUI(foundation.GetTowerInformation());
-        }
-        UpdateUIText();
-    }
-
-    private void SellButton_OnClick()
-    {
-        if (!gameUI.IsASubmenuActive())
-        {
-            foundation.SellTower(foundation.GetTowerInformation());
-        }
-    }
-
+    // Private Functions
     private string TowerEffectivenessInformation(Elements towerType)
     {
         const string colorTextElectro ="<color=#aa00aaff>Electro</color>";
@@ -124,4 +105,21 @@ public class TowerUI : MonoBehaviour
         return towerInfoText;
     }
 
+    // Button Events
+    private void UpgradeButton_OnClick()
+    {
+        if (!gameUI.IsASubmenuActive())
+        {
+            foundation.UpgradeTowerUI(tower);
+        }
+        UpdateUIText();
+    }
+
+    private void SellButton_OnClick()
+    {
+        if (!gameUI.IsASubmenuActive())
+        {
+            foundation.SellTower(tower);
+        }
+    }
 }

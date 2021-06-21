@@ -5,45 +5,50 @@ using UnityEngine.EventSystems;
 
 public class Foundation : MonoBehaviour
 {
-    private Color defaultColor;
-
+    private Color defaultFoundationColor;
     private GameObject tower;
+
+    // Manager informations
+    private BuildManager buildManager;
+    private GameUI gameUI;
+    private PlayerStats player;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        defaultColor = GetComponent<Renderer>().material.color;
+        buildManager = GameManager.Instance.GetComponent<BuildManager>();
+        gameUI = GameManager.Instance.GetComponent<GameUI>();
+        player = GameManager.Instance.GetComponent<PlayerStats>();
+
+        defaultFoundationColor = GetComponent<Renderer>().material.color;
     }
 
     private void OnMouseDown()
     {
-        if (!GameManager.Instance.GetComponent<PlayerStats>().IsGameOver() && !GameManager.Instance.GetComponent<GameUI>().IsASubmenuActive())
+        if (!player.IsGameOver() && !gameUI.IsASubmenuActive())
         {
             if (tower != null)
             {
                 if (EventSystem.current.IsPointerOverGameObject()) return; // Prevent click through UI
-                print("TOWER FOUND");
-                GameManager.Instance.gameObject.GetComponent<BuildManager>().SelectTower(this);
+                buildManager.SelectTower(this);
             }
             else
             {
-                if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild() != null)
+                if (buildManager.GetTowerToBuild() != null)
                 {
                     // check if max amount of buildable towers is reached
-                    if (GameManager.Instance.gameObject.GetComponent<BuildManager>().GetAmountOfTowers() <
-                        GameManager.Instance.gameObject.GetComponent<BuildManager>().GetMaxAmountOfTowers())
+                    if (buildManager.GetAmountOfTowers() < buildManager.GetMaxAmountOfTowers())
                     {
                         // check if player has enoughth currency
-                        if (GameManager.Instance.gameObject.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency() >=
-                            GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower())
+                        if (player.GetCurrentAmountOfCurrency() >= buildManager.GetCurrencyValueOfTower())
                         {
                             // Build tower
-                            tower = (GameObject)Instantiate(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuild(),
-                                                            transform.position, transform.rotation);
-                            tower.GetComponent<TowerBehavior>().SetTowerElement(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetTowerToBuildElement());
-                            GameManager.Instance.gameObject.GetComponent<BuildManager>().IncreasePlayerTowers();
+                            tower = (GameObject)Instantiate(buildManager.GetTowerToBuild(), transform.position, transform.rotation);
+                            tower.GetComponent<TowerBehavior>().SetTowerElement(buildManager.GetTowerToBuildElement());
+                            buildManager.IncreasePlayerTowers();
                             // decrease player currency
-                            GameManager.Instance.gameObject.GetComponent<PlayerStats>().DecreaseCurrency(GameManager.Instance.gameObject.GetComponent<BuildManager>().GetCurrencyValueOfTower());
+                            player.DecreaseCurrency(buildManager.GetCurrencyValueOfTower());
                         }
                         else
                         {
@@ -59,26 +64,22 @@ public class Foundation : MonoBehaviour
         }
     }
 
-    public void UpgradeTowerUI(GameObject selectedTower)
+    public void UpgradeTowerUI(TowerBehavior selectedTower)
     {
-        print($"Value of tower {selectedTower.GetComponent<TowerBehavior>().GetTowerValue()}");
-        if (GameManager.Instance.gameObject.GetComponent<PlayerStats>().GetCurrentAmountOfCurrency() >= selectedTower.GetComponent<TowerBehavior>().GetTowerValue())
+        if (player.GetCurrentAmountOfCurrency() >= selectedTower.GetTowerValue())
         {
-            GameManager.Instance.gameObject.GetComponent<PlayerStats>().DecreaseCurrency(selectedTower.GetComponent<TowerBehavior>().GetTowerValue());
-            selectedTower.GetComponent<TowerBehavior>().UpgradeTower();
-            print($"Lv of tower is: {selectedTower.GetComponent<TowerBehavior>().GetTowerLv()}");
+            player.DecreaseCurrency(selectedTower.GetTowerValue());
+            selectedTower.UpgradeTower();
         }
     }
 
-    public void SellTower(GameObject selectedTower)
+    public void SellTower(TowerBehavior selectedTower)
     {
-        print($"Sell tower for {selectedTower.GetComponent<TowerBehavior>().GetTowerValue() / 2}");
-        GameManager.Instance.gameObject.GetComponent<PlayerStats>().CollectCurrency(selectedTower.GetComponent<TowerBehavior>().GetTowerValue() / 2);
-        
+        player.CollectCurrency(selectedTower.GetTowerValue() / 2);
         // deselect tower and deactivate tower-UI
-        GameManager.Instance.gameObject.GetComponent<BuildManager>().DeselectTower();
-        GameManager.Instance.gameObject.GetComponent<BuildManager>().DecreasePlayerTowers();
-        Destroy(selectedTower);
+        buildManager.DeselectTower();
+        buildManager.DecreasePlayerTowers();
+        Destroy(selectedTower.gameObject);
     }
 
     public GameObject GetTowerInformation()
@@ -94,7 +95,7 @@ public class Foundation : MonoBehaviour
 
     private void OnMouseExit()
     {
-        GetComponent<Renderer>().material.color = defaultColor;
+        GetComponent<Renderer>().material.color = defaultFoundationColor;
         ShowTowerRangeCircle(false);
     }
 

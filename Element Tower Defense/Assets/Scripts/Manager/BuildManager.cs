@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
+    // Build informations
     public GameObject towerToBuild;
     private GameObject towerToBuildBackUp;
     private Elements towerToBuildElement = Elements.WATER;
     private Foundation selectedTower;
 
+    // UI
     private GameObject towerUI;
     private GameUI gameUI;
 
-
+    // Tower cost and amount informations
     private int currencyValueOfTower = 100;
     private int maxAmountOfTowers = 13;
     private int amountOfPlayerTowers = 0;
@@ -23,11 +25,11 @@ public class BuildManager : MonoBehaviour
     {
         towerUI = GameObject.Find("TowerUI");
         gameUI = GameManager.Instance.GetComponent<GameUI>();
-        print($"TEST {towerUI}");
         towerToBuildBackUp = towerToBuild;
         towerToBuild = null;
     }
 
+    // Public Functions
     public GameObject GetTowerToBuild()
     {
         return towerToBuild;
@@ -55,7 +57,7 @@ public class BuildManager : MonoBehaviour
             selectedTower.GetComponent<Foundation>().GetTowerInformation().GetComponent<TowerBehavior>().ChangeRangeCircleState(false); ;
         }
         selectedTower = null;
-        towerToBuild = towerToBuildBackUp; // refactor
+        towerToBuild = towerToBuildBackUp;
         towerUI.GetComponent<TowerUI>().HideUiElement();
 
     }

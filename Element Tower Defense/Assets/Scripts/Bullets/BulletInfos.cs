@@ -15,28 +15,7 @@ public class BulletInfos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        switch (bulletElement)
-        {
-            case Elements.ELECTRO:
-                print("Case Electro");
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
-                transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-                break;
-            case Elements.FIRE:
-                print("Case Fire");
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-                break;
-            case Elements.WATER:
-                print("Case Water");
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
-                transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-                break;
-            default:
-                print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-                break;
-        }
+        SetOpticalBulletProperties();
     }
 
     // Update is called once per frame
@@ -89,5 +68,29 @@ public class BulletInfos : MonoBehaviour
     public float GetBulletSpeed()
     {
         return bulletSpeed;
+    }
+
+    // Set bullet color and particle effect
+    private void SetOpticalBulletProperties()
+    {
+        switch (bulletElement)
+        {
+            case Elements.ELECTRO:
+                this.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+                transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                break;
+            case Elements.FIRE:
+                this.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                break;
+            case Elements.WATER:
+                this.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+                break;
+            default:
+                print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
+                this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                break;
+        }
     }
 }

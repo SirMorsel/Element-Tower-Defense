@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    // Player informations
     private int maxHealth = 25;
     private int health;
     private int currency = 500;
 
+    // Player state
     private bool gameIsOver = false;
 
     private GameUI gameUI;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Town : MonoBehaviour
 {
+    // Check if the fire particle should be activated
     public void UpdatePlayerTownStatus(int playerHealth)
     {
         if (!transform.GetChild(0).gameObject.activeInHierarchy)

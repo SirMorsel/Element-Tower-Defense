@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] Transform EnemyPrefab;
-    [SerializeField] Transform EnemySpawnPoint;
+    // Enemy and Spawn informations
+    [SerializeField] Transform enemyPrefab;
+    [SerializeField] Transform enemySpawnPoint;
 
     // Wave information
     private int currentWaveNumber = 1;
@@ -57,28 +58,13 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
+    // Public Functions
     public void SpawnWaveOverUI()
     {
         countdown = nextWaveCountdown;
         gameUI.TimerTextUpdate(countdown);
         gameUI.ChangeWaveSpawnBtnStage(false);
         StartCoroutine(SpawnWave());
-    }
-
-    IEnumerator SpawnWave()
-    {
-        currentWaveNumber++;
-        gameUI.UpdateWaveNumberInUI();
-        for (int i = 0; i < currentWaveNumber + (currentWaveNumber * difficultyMultiplyer); i++)
-        {
-            listOfEnemies.Add(SpawnEnemy());
-            yield return new WaitForSeconds(waitTime);
-        }
-    }
-
-    private GameObject SpawnEnemy()
-    {
-        return Instantiate(EnemyPrefab, EnemySpawnPoint.position, EnemySpawnPoint.rotation).gameObject;
     }
 
     public int GetWaveNumber()
@@ -94,5 +80,23 @@ public class WaveSpawner : MonoBehaviour
     public void RemoveEnemyFromList(GameObject enemy)
     {
         listOfEnemies.Remove(enemy);
+    }
+
+    // Private Functions
+    private GameObject SpawnEnemy()
+    {
+        return Instantiate(enemyPrefab, enemySpawnPoint.position, enemySpawnPoint.rotation).gameObject;
+    }
+
+    // Interfaces
+    IEnumerator SpawnWave()
+    {
+        currentWaveNumber++;
+        gameUI.UpdateWaveNumberInUI();
+        for (int i = 0; i < currentWaveNumber + (currentWaveNumber * difficultyMultiplyer); i++)
+        {
+            listOfEnemies.Add(SpawnEnemy());
+            yield return new WaitForSeconds(waitTime);
+        }
     }
 }

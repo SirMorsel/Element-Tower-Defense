@@ -21,12 +21,6 @@ public class EnemyStats : MonoBehaviour
         SetMonsterElement();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetDeath()
     {
         if (isDead)

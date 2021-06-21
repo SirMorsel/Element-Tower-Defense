@@ -48,11 +48,9 @@ public class EnemyMovement : MonoBehaviour
             {
                 waypointID++;
                 target = Waypoints.GetWaypoints()[waypointID];
-                // Rotate slime to next waypoint
             }
             else
             {
-                print("Slime reached town!!!!!!");
                 waveSpawner.RemoveEnemyFromList(this.gameObject);
                 Destroy(this.gameObject);
                 player.TakeDamage();
