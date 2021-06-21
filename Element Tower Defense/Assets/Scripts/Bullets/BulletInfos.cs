@@ -47,7 +47,7 @@ public class BulletInfos : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             Debug.Log($"HIT! with a damage of: {bulletDamage}");
-            if (!other.gameObject.GetComponent<EnemyStats>().GetMonsterStatus())
+            if (!other.gameObject.GetComponent<EnemyStats>().GetEnemyStatus())
             {
                 other.gameObject.GetComponent<EnemyStats>().TakeDamage(bulletElement, bulletDamage);
             }
