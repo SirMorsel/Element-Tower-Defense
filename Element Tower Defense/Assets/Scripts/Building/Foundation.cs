@@ -26,6 +26,8 @@ public class Foundation : MonoBehaviour
 
 
     // Public Functions
+
+    // Check if the tower can be upgraded
     public void UpgradeTowerUI(TowerBehavior selectedTower)
     {
         if (player.GetCurrentAmountOfCurrency() >= selectedTower.GetTowerValue())
@@ -78,12 +80,12 @@ public class Foundation : MonoBehaviour
                         }
                         else
                         {
-                            print($"Oh no! It looks you don't have enoughth money left. Damn capitalism!");
+                            gameUI.UpdateUserMessage("Oh no! It looks you don't have enoughth money left. Damn capitalism!");
                         }
                     }
                     else
                     {
-                        print("Max amount of buildable towers reached!!!");
+                        gameUI.UpdateUserMessage("Max amount of buildable towers reached!");
                     }
                 }
             }

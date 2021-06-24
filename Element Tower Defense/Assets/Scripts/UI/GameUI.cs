@@ -21,6 +21,7 @@ public class GameUI : MonoBehaviour
     private Text amountOfTowersText;
     private Text waveNumberText;
     private Text nextWaveCountdownText;
+    private UserMessage userMessageTextbox;
     private Button waveSpawnButton;
     private Button quitButton;
     private Button optionsButton;
@@ -162,6 +163,11 @@ public class GameUI : MonoBehaviour
         return false;
     }
 
+    public void UpdateUserMessage(string message)
+    {
+        userMessageTextbox.SetNewUserMessage(message);
+    }
+
     // Volume Functions
     public void BGMVolume()
     {
@@ -205,6 +211,9 @@ public class GameUI : MonoBehaviour
                     break;
                 case "OptionsButton":
                     optionsButton = uiElements.transform.GetChild(i).GetComponent<Button>();
+                    break;
+                case "UserMessageText":
+                    userMessageTextbox = uiElements.transform.GetChild(i).GetComponent<UserMessage>();
                     break;
                 default:
                     print("Unassigned element detected"); // Just for debug
