@@ -22,7 +22,7 @@ public class EnemyStats : MonoBehaviour
         enemyRenderer = transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
         health = maxHealth;
         healthbar = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
-        SetEnemyElement();
+        SetEnemyElement(false);
     }
 
     // Public Functions
@@ -47,6 +47,8 @@ public class EnemyStats : MonoBehaviour
         {
             print("Normal Damage");
             health -= damage;
+            SetEnemyElement(true, bulletElementType);
+            print($"Change element to {enemyElement}");
         } else if(enemyElement == bulletElementType)
         {
             print("Immune");
@@ -95,9 +97,18 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    private void SetEnemyElement()
+    private void SetEnemyElement(bool setElementOverImpact, Elements incomingElement = Elements.NEUTRAL)
     {
-        enemyElement = (Elements)Random.Range(0, 4);
+        if (setElementOverImpact)
+        {
+            enemyElement = incomingElement;
+            Invoke("SetElementBackToNeutral", 5f);
+        }
+        else
+        {
+            enemyElement = (Elements)Random.Range(0, 4);
+        }
+        
         Color elementColor;
 
         switch (enemyElement)
@@ -120,5 +131,12 @@ public class EnemyStats : MonoBehaviour
                 break;
         }
         enemyRenderer.material.SetColor("_Color", elementColor);
+    }
+
+    private void SetElementBackToNeutral()
+    {
+        enemyElement = Elements.NEUTRAL;
+        enemyRenderer.material.SetColor("_Color", Color.white);
+        print($"Change element back to {enemyElement}");
     }
 }

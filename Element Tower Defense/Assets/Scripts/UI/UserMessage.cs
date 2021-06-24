@@ -7,6 +7,7 @@ public class UserMessage : MonoBehaviour
 {
     private Text userMessageTextfield;
     private float userMessageResetTime = 5f;
+
     // Start is called before the first frame update
     void Awake()
     {
