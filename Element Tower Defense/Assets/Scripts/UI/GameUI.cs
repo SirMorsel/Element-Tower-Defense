@@ -25,6 +25,7 @@ public class GameUI : MonoBehaviour
     private Button waveSpawnButton;
     private Button quitButton;
     private Button optionsButton;
+    private Button speedButton;
 
     // Game Over UI Elements
     private GameObject gameOverUIPanel;
@@ -122,7 +123,7 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void ChangeWaveSpawnBtnStage(bool state)
+    public void ChangeWaveSpawnBtnState(bool state)
     {
         waveSpawnButton.interactable = state;
     }
@@ -130,6 +131,16 @@ public class GameUI : MonoBehaviour
     public void ChangeCountdownTextStat(bool state)
     {
         nextWaveCountdownText.enabled = state;
+    }
+
+    public void ChangeSpeedButtonState(bool state)
+    {
+        speedButton.interactable = state;
+    }
+
+    public void ChangeSpeedButtonText(int currentGameSpeed)
+    {
+        speedButton.transform.GetChild(0).GetComponent<Text>().text = $"{currentGameSpeed}x Speed";
     }
 
     public void BackToMainMenu()
@@ -214,6 +225,11 @@ public class GameUI : MonoBehaviour
                     break;
                 case "UserMessageText":
                     userMessageTextbox = uiElements.transform.GetChild(i).GetComponent<UserMessage>();
+                    break;
+                case "SpeedButton":
+                    speedButton = uiElements.transform.GetChild(i).GetComponent<Button>();
+
+                    ChangeSpeedButtonText(GameManager.Instance.GetGameSpeed());
                     break;
                 default:
                     print("Unassigned element detected"); // Just for debug

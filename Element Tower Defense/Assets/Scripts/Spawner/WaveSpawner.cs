@@ -38,7 +38,7 @@ public class WaveSpawner : MonoBehaviour
         { 
             if (GetListOfEnemies().Count <= 0)
             {
-                gameUI.ChangeWaveSpawnBtnStage(true);
+                gameUI.ChangeWaveSpawnBtnState(true);
                 gameUI.ChangeCountdownTextStat(true);
                 if (countdown <= 0)
                 {
@@ -51,13 +51,13 @@ public class WaveSpawner : MonoBehaviour
             else
             {
                 gameUI.ChangeCountdownTextStat(false);
-                gameUI.ChangeWaveSpawnBtnStage(false);
+                gameUI.ChangeWaveSpawnBtnState(false);
             }
         } 
         else
         {
             gameUI.ChangeCountdownTextStat(false);
-            gameUI.ChangeWaveSpawnBtnStage(false);
+            gameUI.ChangeWaveSpawnBtnState(false);
         }
     }
 
@@ -66,7 +66,7 @@ public class WaveSpawner : MonoBehaviour
     {
         countdown = nextWaveCountdown;
         gameUI.TimerTextUpdate(countdown);
-        gameUI.ChangeWaveSpawnBtnStage(false);
+        gameUI.ChangeWaveSpawnBtnState(false);
         StartCoroutine(SpawnWave());
     }
 
@@ -94,12 +94,14 @@ public class WaveSpawner : MonoBehaviour
     // Interfaces
     IEnumerator SpawnWave()
     {
+        gameUI.ChangeSpeedButtonState(false);
         currentWaveNumber++;
         gameUI.UpdateWaveNumberInUI();
         for (int i = 0; i < currentWaveNumber + (currentWaveNumber * difficultyMultiplyer); i++)
         {
             listOfEnemies.Add(SpawnEnemy());
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(waitTime / GameManager.Instance.GetGameSpeed());
         }
+        gameUI.ChangeSpeedButtonState(true);
     }
 }

@@ -48,7 +48,6 @@ public class EnemyStats : MonoBehaviour
             print("Normal Damage");
             health -= damage;
             SetEnemyElement(true, bulletElementType);
-            print($"Change element to {enemyElement}");
         } else if(enemyElement == bulletElementType)
         {
             print("Immune");
@@ -91,7 +90,8 @@ public class EnemyStats : MonoBehaviour
         if (isEffective)
         {
             return damage * 2;
-        } else
+        } 
+        else
         {
             return damage / 2;
         }
@@ -137,6 +137,5 @@ public class EnemyStats : MonoBehaviour
     {
         enemyElement = Elements.NEUTRAL;
         enemyRenderer.material.SetColor("_Color", Color.white);
-        print($"Change element back to {enemyElement}");
     }
 }

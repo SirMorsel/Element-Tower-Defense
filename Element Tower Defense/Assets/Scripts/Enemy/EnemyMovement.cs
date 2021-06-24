@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void MoveToWaypoint()
     {
-        transform.Translate((target.position - transform.position).normalized * speed * Time.deltaTime);
+        transform.Translate((target.position - transform.position).normalized * (speed * GameManager.Instance.GetGameSpeed()) * Time.deltaTime);
     }
 
     private void SetNewWaypointTarget()
@@ -61,7 +61,7 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector3 direction = target.position - transform.GetChild(0).position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(transform.GetChild(0).rotation, lookRotation, rotationSpeed * Time.deltaTime).eulerAngles;
+        Vector3 rotation = Quaternion.Lerp(transform.GetChild(0).rotation, lookRotation, (rotationSpeed * GameManager.Instance.GetGameSpeed()) * Time.deltaTime).eulerAngles;
         transform.GetChild(0).rotation = Quaternion.Euler(0f, rotation.y, 0f);
     }
 }

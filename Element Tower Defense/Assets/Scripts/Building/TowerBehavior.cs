@@ -148,7 +148,7 @@ public class TowerBehavior : MonoBehaviour
     {
         Vector3 direction = currentTarget.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(turretCrystal.rotation, lookRotation, rotationSpeed * Time.deltaTime).eulerAngles;
+        Vector3 rotation = Quaternion.Lerp(turretCrystal.rotation, lookRotation, (rotationSpeed * GameManager.Instance.GetGameSpeed()) * Time.deltaTime).eulerAngles;
         turretCrystal.rotation = Quaternion.Euler(0f, rotation.y, 0f);
     }
 
@@ -164,7 +164,7 @@ public class TowerBehavior : MonoBehaviour
             bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv * towerDamage);
             bullet.GetComponent<BulletInfos>().Chase(currentTarget);
 
-            fireoffset = fireRate;
+            fireoffset = fireRate / GameManager.Instance.GetGameSpeed();
         }
     }
 

@@ -27,7 +27,7 @@ public class BulletInfos : MonoBehaviour
         } else
         {
             Vector3 direction = target.position - transform.position;
-            transform.Translate(direction.normalized * bulletSpeed * Time.deltaTime, Space.World);
+            transform.Translate(direction.normalized * (bulletSpeed * GameManager.Instance.GetGameSpeed()) * Time.deltaTime, Space.World);
             bulletLifetime -= Time.deltaTime;
             if (bulletLifetime <= 0)
             {
