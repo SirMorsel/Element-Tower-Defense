@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
     // Build informations
-    public GameObject towerToBuild;
+    [SerializeField] GameObject towerToBuild;
     private GameObject towerToBuildBackUp;
     private Elements towerToBuildElement = Elements.WATER;
     private Foundation selectedTower;

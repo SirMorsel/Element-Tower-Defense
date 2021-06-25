@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class TowerBehavior : MonoBehaviour
 {
+    // Manager informations
+    private PlayerStats player;
+    private WaveSpawner waveSpawner;
+
     // Tower base informations
     private int towerLv = 1;
     private int towerMaxLv = 3;
@@ -33,6 +37,8 @@ public class TowerBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameManager.Instance.GetComponent<PlayerStats>();
+        waveSpawner = GameManager.Instance.GetComponent<WaveSpawner>();
         towerValue = GameManager.Instance.GetComponent<BuildManager>().GetTowerBaseValue();
         turretCrystal = this.transform.GetChild(0);
         towerRangeCircle = this.transform.GetChild(2).gameObject;
@@ -121,16 +127,16 @@ public class TowerBehavior : MonoBehaviour
         }
         turretCrystalRenderer.material.SetColor("_Color", turretCrystalColor);
     }
+
     private void SearchForTarget()
     {
-        List<GameObject> targets = GameManager.Instance.gameObject.GetComponent<WaveSpawner>().GetListOfEnemies();
+        List<GameObject> targets = waveSpawner.GetListOfEnemies();
         foreach (var target in targets)
         {
             
             float distance = Vector3.Distance(transform.position, target.transform.position);
             if (distance < range && currentTarget == null)
             {
-              print("Found Target");
               currentTarget = target.transform;
             }
         }
@@ -138,7 +144,6 @@ public class TowerBehavior : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, currentTarget.transform.position) > range)
             {
-                print("Target lost");
                 currentTarget = null;
             }
         }
@@ -155,10 +160,9 @@ public class TowerBehavior : MonoBehaviour
     private void Fire()
     {
         fireoffset -= Time.deltaTime;
-        if (fireoffset <= 0f && !GameManager.Instance.GetComponent<PlayerStats>().IsGameOver())
+        if (fireoffset <= 0f && !player.IsGameOver())
         {
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-            print($"VOLUME OF TOWER {AudioManager.Instance.GetSFXVolume()}");
             source.PlayOneShot(source.clip, AudioManager.Instance.GetSFXVolume());
             bullet.GetComponent<BulletInfos>().SetBulletElementType(towerElement);
             bullet.GetComponent<BulletInfos>().SetBulletDamage(towerLv * towerDamage);

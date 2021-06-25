@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource source;
 
 
-    private void Awake()
+    void Awake()
     {
         if (_instance != null && _instance != this)
         {

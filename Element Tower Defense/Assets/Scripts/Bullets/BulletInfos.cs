@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class BulletInfos : MonoBehaviour
 {
-
+    // Bullet informations
     private Elements bulletElement = Elements.NEUTRAL;
     private float bulletDamage;
     private float bulletSpeed = 10f;
     private float bulletLifetime = 10f; // Lifetime in seconds
+
+    // Target informations
     private Transform target;
 
     // Start is called before the first frame update
@@ -45,10 +47,11 @@ public class BulletInfos : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log($"HIT! with a damage of: {bulletDamage}");
-            if (!other.gameObject.GetComponent<EnemyStats>().GetEnemyStatus())
+            EnemyStats enemy = other.gameObject.GetComponent<EnemyStats>();
+            // Check if enemy is dead
+            if (!enemy.GetEnemyStatus())
             {
-                other.gameObject.GetComponent<EnemyStats>().TakeDamage(bulletElement, bulletDamage);
+                enemy.TakeDamage(bulletElement, bulletDamage);
             }
         }
         Destroy(this.gameObject);
@@ -72,24 +75,27 @@ public class BulletInfos : MonoBehaviour
     // Set bullet color and particle effect
     private void SetOpticalBulletProperties()
     {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Color bulletColor = Color.white;
         switch (bulletElement)
         {
             case Elements.ELECTRO:
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.magenta);
+                bulletColor = Color.magenta;
                 transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
                 break;
             case Elements.FIRE:
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                bulletColor = Color.red;
                 transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
                 break;
             case Elements.WATER:
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                bulletColor = Color.blue;
                 transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
                 break;
             default:
                 print("An almighty element that is bursting with neutrality. (This is a placeholder element and shouldn't actually appear in the game.");
-                this.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                bulletColor = Color.white;
                 break;
         }
+        renderer.material.SetColor("_Color", bulletColor);
     }
 }

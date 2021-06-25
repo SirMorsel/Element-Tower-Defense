@@ -102,7 +102,7 @@ public class EnemyStats : MonoBehaviour
         if (setElementOverImpact)
         {
             enemyElement = incomingElement;
-            Invoke("SetElementBackToNeutral", 5f);
+            Invoke("SetElementBackToNeutral", 5f / GameManager.Instance.GetGameSpeed());
         }
         else
         {

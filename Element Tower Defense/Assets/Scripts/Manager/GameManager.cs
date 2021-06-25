@@ -5,10 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+
+    // Basic Game informations
     private int baseGameSpeed = 1;
+
     public static GameManager Instance { get { return _instance; } }
 
-    private void Awake()
+    void Awake()
     {
         if (_instance != null && _instance != this)
         {
@@ -28,7 +31,6 @@ public class GameManager : MonoBehaviour
     public void ChangeGameSpeed()
     {
         baseGameSpeed++;
-        print($"Game speed {baseGameSpeed}");
         if (baseGameSpeed > 3)
         {
             baseGameSpeed = 1;

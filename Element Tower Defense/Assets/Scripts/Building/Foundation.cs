@@ -65,10 +65,10 @@ public class Foundation : MonoBehaviour
             {
                 if (buildManager.GetTowerToBuild() != null)
                 {
-                    // check if max amount of buildable towers is reached
+                    // Check if max amount of buildable towers is reached
                     if (buildManager.GetAmountOfTowers() < buildManager.GetMaxAmountOfTowers())
                     {
-                        // check if player has enoughth currency
+                        // Check if player has enough currency
                         if (player.GetCurrentAmountOfCurrency() >= buildManager.GetCurrencyValueOfTower())
                         {
                             // Build tower
@@ -80,7 +80,7 @@ public class Foundation : MonoBehaviour
                         }
                         else
                         {
-                            gameUI.UpdateUserMessage("Oh no! It looks you don't have enoughth money left. Damn capitalism!");
+                            gameUI.UpdateUserMessage("Oh no! It looks you don't have enough money left. Damn capitalism!");
                         }
                     }
                     else

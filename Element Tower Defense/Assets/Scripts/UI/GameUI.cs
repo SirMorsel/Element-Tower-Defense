@@ -94,7 +94,7 @@ public class GameUI : MonoBehaviour
 
     public void UpdatePlayerCurrencyInUI(int currency)
     {
-        playerCurrencyText.text = $"Currency: {currency}";
+        playerCurrencyText.text = $"Currency: ${currency}";
     }
 
     public void UpdatePlayerHealthInUI(int currentHealth, int maxHealth)
