@@ -35,6 +35,10 @@ public class Foundation : MonoBehaviour
             player.DecreaseCurrency(selectedTower.GetTowerValue());
             selectedTower.UpgradeTower();
         }
+        else
+        {
+            gameUI.UpdateUserMessage("Oh no! It looks you don't have enough money left. Damn capitalism!");
+        }
     }
 
     public void SellTower(TowerBehavior selectedTower)
