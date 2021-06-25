@@ -23,7 +23,7 @@ public class TowerBehavior : MonoBehaviour
 
     // Tower offensive informations
     private Transform turretCrystal;
-    public GameObject bulletPrefab;
+    [SerializeField] GameObject bulletPrefab;
     private Transform bulletSpawn;
     private float towerDamage = 30f;
     private float fireRate = 2f;

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         return baseGameSpeed;
     }
 
+    // Determines the general speed of the game (Does not affect any ui elements)
     public void ChangeGameSpeed()
     {
         baseGameSpeed++;
