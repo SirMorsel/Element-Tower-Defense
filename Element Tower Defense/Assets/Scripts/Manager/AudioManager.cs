@@ -13,7 +13,6 @@ public class AudioManager : MonoBehaviour
     private float sfxVolume = 0.5f;
     private AudioSource source;
 
-
     void Awake()
     {
         if (_instance != null && _instance != this)

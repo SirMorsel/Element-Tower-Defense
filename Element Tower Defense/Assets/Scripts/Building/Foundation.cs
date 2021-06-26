@@ -115,5 +115,4 @@ public class Foundation : MonoBehaviour
             tower.GetComponent<TowerBehavior>().ChangeRangeCircleState(showRangeCircle);
         }
     }
-
 }

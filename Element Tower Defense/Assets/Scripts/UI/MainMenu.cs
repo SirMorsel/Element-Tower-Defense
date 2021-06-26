@@ -20,7 +20,7 @@ public class MainMenu : MonoBehaviour
         mainMenuPanel = GameObject.Find("Canvas/MainPanel");
         InitializeMainMenuOptionsUI();
 
-        // Hide Submenue
+        // Hide Submenu
         ChangeOptionsUIState(false);
     }
 

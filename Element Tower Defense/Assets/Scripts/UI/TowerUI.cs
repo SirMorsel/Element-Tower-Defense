@@ -90,15 +90,12 @@ public class TowerUI : MonoBehaviour
         switch (towerType)
         {
             case Elements.ELECTRO:
-                print("Case Electro");
                 towerInfoText = $" Effective against {colorTextWater} \n Not effecitve against {colorTextFire} \n No damage against {colorTextElectro}";
                 break;
             case Elements.FIRE:
-                print("Case Fire");
                 towerInfoText = $" Effective against {colorTextElectro} \n Not effecitve against {colorTextWater} \n No damage against {colorTextFire}";
                 break;
             case Elements.WATER:
-                print("Case Water");
                 towerInfoText = $" Effective against {colorTextFire} \n Not effecitve against {colorTextElectro} \n No damage against {colorTextWater}";
                 break;
             default:

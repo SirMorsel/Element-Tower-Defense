@@ -177,6 +177,4 @@ public class TowerBehavior : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }
-
-
 }

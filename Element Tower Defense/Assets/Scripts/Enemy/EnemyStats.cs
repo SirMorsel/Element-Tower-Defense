@@ -45,7 +45,6 @@ public class EnemyStats : MonoBehaviour
     {
         if (enemyElement == Elements.NEUTRAL)
         {
-            print("Normal Damage");
             health -= damage;
             SetEnemyElement(true, bulletElementType);
         } else if(enemyElement == bulletElementType)
