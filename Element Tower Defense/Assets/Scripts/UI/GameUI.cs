@@ -77,6 +77,7 @@ public class GameUI : MonoBehaviour
         {
             quitButton.interactable = false;
             optionsButton.interactable = false;
+            ChangeSpeedButtonState(false);
             GameOver();
         }
     }

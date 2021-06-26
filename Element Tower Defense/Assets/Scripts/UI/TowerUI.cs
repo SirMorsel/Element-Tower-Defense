@@ -69,14 +69,14 @@ public class TowerUI : MonoBehaviour
                 $" => " +
                 $"Dmg Lv {(tower.GetTowerLv() + 1)}: <color=#006400ff>{(tower.GetTowerLv() + 1) * tower.GetTowerDamage()}</color>";
             upgradeButton.gameObject.SetActive(true);
-            upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade ({tower.GetTowerValue()})";
+            upgradeButton.GetComponentInChildren<Text>().text = $"Upgrade (${tower.GetTowerValue()})";
         } else
         {
             towerUpgradeInfoText.text = $"Dmg Lv {tower.GetTowerLv()}: {tower.GetTowerLv() * tower.GetTowerDamage()}";
             upgradeButton.gameObject.SetActive(false);
         }
 
-        sellButton.GetComponentInChildren<Text>().text = $"Sell ({tower.GetTowerValue() / 2})";
+        sellButton.GetComponentInChildren<Text>().text = $"Sell (${tower.GetTowerValue() / 2})";
     }
 
     // Private Functions
